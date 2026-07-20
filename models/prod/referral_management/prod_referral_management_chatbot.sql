@@ -27,6 +27,7 @@ final as (
         patient_name,
         patient_age,
         patient_gender,
+        patient_taluka,
         referred_to_department
 
     from staging

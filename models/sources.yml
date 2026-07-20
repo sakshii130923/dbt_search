@@ -1,598 +1,573 @@
 version: 2
 
 sources:
-  - name: staging_tribal_health_mmu_data
-    schema: staging_tribal_health_mmu_data
-    description: "Raw MMU data from different sources"
-    tables:
-      - name: MMU_1
-        identifier: MMU_1
-        description: "MMU data from first source"
-        columns:
-          - name: serial_no
-            description: "Serial number of the record"
-            tests:
-              - not_null
-          - name: patient_unique_id
-            description: "Unique identifier for patient"
-            tests:
-              - not_null
-              - unique
-          - name: area
-            description: "Area where patient is from"
-          - name: name_of_the_village
-            description: "Village name"
-          - name: name_of_the_patient
-            description: "Patient name"
-          - name: age_day
-            description: "Age in days"
-          - name: age_month
-            description: "Age in months"
-          - name: age_years
-            description: "Age in years"
-          - name: t_age
-            description: "Total calculated age"
-          - name: sex
-            description: "Patient gender"
-          - name: diagnosis1
-            description: "Primary diagnosis"
-          - name: diagnosis2
-            description: "Secondary diagnosis"
-          - name: diagnosis3
-            description: "Third diagnosis"
-          - name: diagnosis4
-            description: "Fourth diagnosis"
-          - name: p_diagnosis5
-            description: "Fifth diagnosis"
-          - name: p_refered
-            description: "Patient referral status"
-          - name: p_newly_diag
-            description: "Newly diagnosed patient flag"
-          - name: p_followup
-            description: "Follow-up patient flag"
-          - name: submitted_by
-            description: "Person who submitted the record"
-          - name: submitted_on
-            description: "Date when record was submitted"
-          - name: dd
-            description: "Day component of visit date"
-          - name: mm
-            description: "Month component of visit date"
-          - name: yy
-            description: "Year component of visit date"
-          - name: dr_names
-            description: "Doctor name"
-
-      - name: MMU_2
-        identifier: MMU_2
-        description: "MMU data from second source"
-        columns:
-          - name: serial_no
-            description: "Serial number of the record"
-            tests:
-              - not_null
-          - name: patient_unique_id
-            description: "Unique identifier for patient"
-            tests:
-              - not_null
-              - unique
-          - name: area
-            description: "Area where patient is from"
-          - name: name_of_the_village
-            description: "Village name"
-          - name: name_of_the_patient
-            description: "Patient name"
-          - name: age_day
-            description: "Age in days"
-          - name: age_month
-            description: "Age in months"
-          - name: age_years
-            description: "Age in years"
-          - name: t_age
-            description: "Total calculated age"
-          - name: sex
-            description: "Patient gender"
-          - name: diagnosis1
-            description: "Primary diagnosis"
-          - name: diagnosis2
-            description: "Secondary diagnosis"
-          - name: diagnosis3
-            description: "Third diagnosis"
-          - name: diagnosis4
-            description: "Fourth diagnosis"
-          - name: p_diagnosis5
-            description: "Fifth diagnosis"
-          - name: p_refered
-            description: "Patient referral status"
-          - name: p_newly_diag
-            description: "Newly diagnosed patient flag"
-          - name: p_followup
-            description: "Follow-up patient flag"
-          - name: submitted_by
-            description: "Person who submitted the record"
-          - name: submitted_on
-            description: "Date when record was submitted"
-          - name: dd
-            description: "Day component of visit date"
-          - name: mm
-            description: "Month component of visit date"
-          - name: yy
-            description: "Year component of visit date"
-          - name: dr_names
-            description: "Doctor name"
-
-  - name: chjs_raw
-    description: Raw CHJS (Community Health Joint Support) patient data from Google Sheets
-    schema: staging_chjs_data  # Update this to your actual schema name
-    tables:
-      - name: new_patients
-        identifier: DataofNewPatient  # Update this to match your actual table name
-        description: New patient visit records from CHJS clinics
-        columns:
-          - name: registeration_no_
-            description: Unique patient registration number
-          - name: name
-            description: Patient name
-          - name: age
-            description: Patient age in years
-          - name: gender
-            description: Gender code (1=Male, 2=Female)
-          - name: day
-            description: Day of visit
-          - name: month
-            description: Month of visit
-          - name: year
-            description: Year of visit
-          - name: type_
-            description: Visit type code
-          - name: speciality_
-            description: Medical speciality code
-          - name: area_affected_
-            description: Body area affected code
-          - name: n_diagnosis_1
-            description: Primary neurological diagnosis code
-          - name: n_advice_1_
-            description: Primary neurological advice code
-          - name: n_diagnosis_2
-            description: Secondary neurological diagnosis code
-          - name: n_advice_2
-            description: Secondary neurological advice code
-          - name: n_diagnosis_3
-            description: Tertiary neurological diagnosis code
-          - name: n_advice_3
-            description: Tertiary neurological advice code
-          - name: red_flag_
-            description: Red flag indicator code
-          - name: if_red_flag_yes_then_mention_red_flag
-            description: Free text red flag description
-          - name: mri_suggested
-            description: MRI suggestion code
-          - name: mri_referred
-            description: MRI referral code
-          - name: x_ray_mri_already_done
-            description: Previous imaging status code
-          - name: other_diagnosis_1
-            description: First other diagnosis (free text)
-          - name: other_diagnosis_2
-            description: Second other diagnosis (free text)
-          - name: other_diagnosis_3
-            description: Third other diagnosis (free text)
-          - name: district
-            description: Patient district
-          - name: taluka
-            description: Patient taluka
-          - name: mobile_no_
-            description: Patient mobile number
-          - name: referred_by
-            description: Referring provider
-          - name: referred_to
-            description: Referred to provider
-
-      - name: followup_patients
-        identifier: DataofFollowUpPatient  # Update this to match your actual table name
-        description: Follow-up patient visit records from CHJS clinics
-        columns:
-          - name: registeration_no_
-            description: Unique patient registration number
-          - name: name
-            description: Patient name
-          - name: age
-            description: Patient age in years
-          - name: gender
-            description: Gender code (1=Male, 2=Female)
-          - name: day
-            description: Day of visit
-          - name: month
-            description: Month of visit
-          - name: year
-            description: Year of visit
-          - name: type_
-            description: Visit type code
-          - name: speciality_
-            description: Medical speciality code
-          - name: area_affected_
-            description: Body area affected code
-          - name: n_diagnosis_1
-            description: Primary neurological diagnosis code
-          - name: n_advice_1_
-            description: Primary neurological advice code
-          - name: n_diagnosis_2
-            description: Secondary neurological diagnosis code
-          - name: n_advice_2
-            description: Secondary neurological advice code
-          - name: n_diagnosis_3
-            description: Tertiary neurological diagnosis code
-          - name: n_advice_3
-            description: Tertiary neurological advice code
-          - name: red_flag_
-            description: Red flag indicator code
-          - name: if_red_flag_yes_then_mention_red_flag
-            description: Free text red flag description
-          - name: mri_suggested
-            description: MRI suggestion code
-          - name: mri_referred
-            description: Previous imaging status code
-          - name: other_diagnosis
-            description: First other diagnosis (free text)
-          - name: patient_return_with_mri
-            description: Patient return with MRI code
-
+- name: staging_tribal_health_mmu_data
+  schema: staging_tribal_health_mmu_data
+  description: Raw MMU data from different sources
+  tables:
+  - name: MMU_1
+    identifier: MMU_1
+    description: MMU data from first source
+    columns:
+    - name: serial_no
+      description: Serial number of the record
+      tests:
+      - not_null
+    - name: patient_unique_id
+      description: Unique identifier for patient
+      tests:
+      - not_null
+      - unique
+    - name: area
+      description: Area where patient is from
+    - name: name_of_the_village
+      description: Village name
+    - name: name_of_the_patient
+      description: Patient name
+    - name: age_day
+      description: Age in days
+    - name: age_month
+      description: Age in months
+    - name: age_years
+      description: Age in years
+    - name: t_age
+      description: Total calculated age
+    - name: sex
+      description: Patient gender
+    - name: diagnosis1
+      description: Primary diagnosis
+    - name: diagnosis2
+      description: Secondary diagnosis
+    - name: diagnosis3
+      description: Third diagnosis
+    - name: diagnosis4
+      description: Fourth diagnosis
+    - name: p_diagnosis5
+      description: Fifth diagnosis
+    - name: p_refered
+      description: Patient referral status
+    - name: p_newly_diag
+      description: Newly diagnosed patient flag
+    - name: p_followup
+      description: Follow-up patient flag
+    - name: submitted_by
+      description: Person who submitted the record
+    - name: submitted_on
+      description: Date when record was submitted
+    - name: dd
+      description: Day component of visit date
+    - name: mm
+      description: Month component of visit date
+    - name: yy
+      description: Year component of visit date
+    - name: dr_names
+      description: Doctor name
+  - name: MMU_2
+    identifier: MMU_2
+    description: MMU data from second source
+    columns:
+    - name: serial_no
+      description: Serial number of the record
+      tests:
+      - not_null
+    - name: patient_unique_id
+      description: Unique identifier for patient
+      tests:
+      - not_null
+      - unique
+    - name: area
+      description: Area where patient is from
+    - name: name_of_the_village
+      description: Village name
+    - name: name_of_the_patient
+      description: Patient name
+    - name: age_day
+      description: Age in days
+    - name: age_month
+      description: Age in months
+    - name: age_years
+      description: Age in years
+    - name: t_age
+      description: Total calculated age
+    - name: sex
+      description: Patient gender
+    - name: diagnosis1
+      description: Primary diagnosis
+    - name: diagnosis2
+      description: Secondary diagnosis
+    - name: diagnosis3
+      description: Third diagnosis
+    - name: diagnosis4
+      description: Fourth diagnosis
+    - name: p_diagnosis5
+      description: Fifth diagnosis
+    - name: p_refered
+      description: Patient referral status
+    - name: p_newly_diag
+      description: Newly diagnosed patient flag
+    - name: p_followup
+      description: Follow-up patient flag
+    - name: submitted_by
+      description: Person who submitted the record
+    - name: submitted_on
+      description: Date when record was submitted
+    - name: dd
+      description: Day component of visit date
+    - name: mm
+      description: Month component of visit date
+    - name: yy
+      description: Year component of visit date
+    - name: dr_names
+      description: Doctor name
+- name: chjs_raw
+  description: Raw CHJS (Community Health Joint Support) patient data from Google
+    Sheets
+  schema: staging_chjs_data
+  tables:
+  - name: new_patients
+    identifier: DataofNewPatient
+    description: New patient visit records from CHJS clinics
+    columns:
+    - name: registeration_no_
+      description: Unique patient registration number
+    - name: name
+      description: Patient name
+    - name: age
+      description: Patient age in years
+    - name: gender
+      description: Gender code (1=Male, 2=Female)
+    - name: day
+      description: Day of visit
+    - name: month
+      description: Month of visit
+    - name: year
+      description: Year of visit
+    - name: type_
+      description: Visit type code
+    - name: speciality_
+      description: Medical speciality code
+    - name: area_affected_
+      description: Body area affected code
+    - name: n_diagnosis_1
+      description: Primary neurological diagnosis code
+    - name: n_advice_1_
+      description: Primary neurological advice code
+    - name: n_diagnosis_2
+      description: Secondary neurological diagnosis code
+    - name: n_advice_2
+      description: Secondary neurological advice code
+    - name: n_diagnosis_3
+      description: Tertiary neurological diagnosis code
+    - name: n_advice_3
+      description: Tertiary neurological advice code
+    - name: red_flag_
+      description: Red flag indicator code
+    - name: if_red_flag_yes_then_mention_red_flag
+      description: Free text red flag description
+    - name: mri_suggested
+      description: MRI suggestion code
+    - name: mri_referred
+      description: MRI referral code
+    - name: x_ray_mri_already_done
+      description: Previous imaging status code
+    - name: other_diagnosis_1
+      description: First other diagnosis (free text)
+    - name: other_diagnosis_2
+      description: Second other diagnosis (free text)
+    - name: other_diagnosis_3
+      description: Third other diagnosis (free text)
+    - name: district
+      description: Patient district
+    - name: taluka
+      description: Patient taluka
+    - name: mobile_no_
+      description: Patient mobile number
+    - name: referred_by
+      description: Referring provider
+    - name: referred_to
+      description: Referred to provider
+  - name: followup_patients
+    identifier: DataofFollowUpPatient
+    description: Follow-up patient visit records from CHJS clinics
+    columns:
+    - name: registeration_no_
+      description: Unique patient registration number
+    - name: name
+      description: Patient name
+    - name: age
+      description: Patient age in years
+    - name: gender
+      description: Gender code (1=Male, 2=Female)
+    - name: day
+      description: Day of visit
+    - name: month
+      description: Month of visit
+    - name: year
+      description: Year of visit
+    - name: type_
+      description: Visit type code
+    - name: speciality_
+      description: Medical speciality code
+    - name: area_affected_
+      description: Body area affected code
+    - name: n_diagnosis_1
+      description: Primary neurological diagnosis code
+    - name: n_advice_1_
+      description: Primary neurological advice code
+    - name: n_diagnosis_2
+      description: Secondary neurological diagnosis code
+    - name: n_advice_2
+      description: Secondary neurological advice code
+    - name: n_diagnosis_3
+      description: Tertiary neurological diagnosis code
+    - name: n_advice_3
+      description: Tertiary neurological advice code
+    - name: red_flag_
+      description: Red flag indicator code
+    - name: if_red_flag_yes_then_mention_red_flag
+      description: Free text red flag description
+    - name: mri_suggested
+      description: MRI suggestion code
+    - name: mri_referred
+      description: Previous imaging status code
+    - name: other_diagnosis
+      description: First other diagnosis (free text)
+    - name: patient_return_with_mri
+      description: Patient return with MRI code
+- name: staging_nirman_questionnaire
+  schema: staging_nirman_questionnaire
+  tables:
   - name: staging_nirman_questionnaire
-    schema: staging_nirman_questionnaire
-    tables:
-      - name: staging_nirman_questionnaire
-        identifier: tabWorkshop_Questionnaire
-        description: NIRMAN Workshop Questionnaire responses with career, criteria, insecurities, and questions data
-        columns:
-          - name: name
-            description: Unique identifier for the questionnaire response
-          - name: participant
-            description: Participant identifier
-          - name: workshop
-            description: Workshop identifier
-          # Career columns (8 total) - list of careers given to NIRMAN candidates to prioritise. each column will hold a value between 1 and 8
-          - name: carrer_1
-            description: Government Service
-          - name: carrer_2
-            description: Job in Private Industry
-          - name: carrer_3
-            description: Social Entrepreneurship/Own NGO
-          - name: carrer_4
-            description: Own Business
-          - name: carrer_5
-            description: Academic (College/University)
-          - name: carrer_6
-            description: Working in NGO
-          - name: carrer_7
-            description: Confused / Not Decided
-          - name: carrer_8
-            description: Other
-          # Criteria columns (8 total) - list of criteria that NIRMAN candidates are asked to prioritise from their view point, each column has a value from 1 to 10
-          - name: criteria_1
-            description: Geographical Location
-          - name: criteria_2
-            description: Financial Security
-          - name: criteria_3
-            description: Work Satisfaction
-          - name: criteria_4
-            description: Cause of My work
-          - name: criteria_5
-            description: Career progress/growth
-          - name: criteria_6
-            description: Work Life Balance
-          - name: criteria_7
-            description: Financial Prosperity
-          - name: criteria_8
-            description: Job Security
-          # Insecurities columns (10 total) - list of insecurities that NIRMAN candidates are asked to prioritise from their view point. each column will have the value from 1 to 10
-          - name: insecurities_1
-            description: Social Acceptability
-          - name: insecurities_2
-            description: Monetary Compensation
-          - name: insecurities_3
-            description: Response of Parents
-          - name: insecurities_4
-            description: Difficulty in finding the suitable life partner
-          - name: insecurities_5
-            description: Underutilisation of my talent and skills
-          - name: insecurities_6
-            description: Less comfortable lifestyle as compared to my usual peers
-          - name: insecurities_7
-            description: Not being Able to create any visible impact
-          - name: insecurities_8
-            description: Feeling professionally leftout
-          - name: insecurities_9
-            description: Lack of satisfaction at the end of life
-          - name: insecurities_10
-            description: Will my life be less Comfortable than it currently is
-          # Social contribution - column containing value to show if the NIRMANI is interested in contributing to society. This is a boolean variable.
-          - name: social_contribution
-            description: During my productive lifetime I plan to engage in social contribution
-          # Questions - a set of questions to capture a candidate's perception about themselves (41)
-          - name: question_1
-            description: I feel happy about myself. I like who I am.
-          - name: question_2
-            description: I have a good understanding about various social issues around me and their severity
-          # ... (additional questions)
-          # Finance columns - a set of 4 columns that contain the monthly incomes deemed necessary by the candidate
-          - name: finance_1
-            description: Monthly income needed at age 25
-          - name: finance_2
-            description: Monthly income needed at age 30
-          - name: finance_3
-            description: Monthly income as per Financial sheet
-          - name: finance_4
-            description: Finance divided by 2
-
-  - name: nirman
-    description: Nirman demographics data from frappe mariadb via Airbyte
-    schema: staging_nirman_demographics
-    tables:
-      - name: demographics_raw
-        identifier: tabNIRMANI_Details
-        description: Staging table for Nirman demographics data containing participant information
-        columns:
-          - name: id
-            description: Unique identifier for each participant
-          - name: name
-            description: Participant's full name
-          - name: gender
-            description: Participant's gender
-          - name: batch
-            description: Batch or cohort identifier
-          - name: mobile
-            description: Mobile number
-          - name: email_id
-            description: Email address
-          - name: workshop_details
-            description: Workshop identifier or name
-          - name: nirman_krutee_nirman
-            description: Type of workshop (Nirman/Krutee)
-          - name: educational_degree
-            description: Educational degree
-          - name: educational_stream
-            description: Original detailed educational stream from source (Medical,Engineering , Arts/Commerce/Science/Pharmacy)
-          - name: level_of_education
-            description: Education level (B for Bachelor's, M for Master's, P for PhD)
-          - name: current_status_of_work
-            description: Current employment or work status (DT/EdB/OW/Not Now/SIW/Student)
-          - name: workshop_month_and_year
-            description: Month and year when workshop was conducted
-          - name: age_at_the_time_of_the_workshop_
-            description: Age at the time of the workshop
-          - name: person_years_of_social_action_as_on_31_st_mar_22
-            description: Years of experience in social action work as of March 31, 2022
-          - name: person_years_of_social_action_as_on_31_st_mar_23
-            description: Years of experience in social action work as of March 31, 2023
-          - name: person_years_of_social_action_as_on_31_st_mar_24
-            description: Years of experience in social action work as of March 31, 2024
-          - name: person_years_of_social_action_as_on_31_st_mar_25
-            description: Years of experience in social action work as of March 31, 2025
-          - name : Native State
-            description: Participant's native state
-          - name : Native District
-            description: Participant's native district
-          - name : Native Tehsil/Town
-            description: Participant's native taluka
-            
-  - name: staging_village_master_data
-    schema: staging
-    tables:
-     - name: Matched Villages
-       identifier: Matched_Villages_
-       description: Master data for villages
-       columns:
-          - name: marathi
-            description: Village name in Marathi
-          - name: english
-            description: Village name in English
-          - name: district
-            description: District name
-          - name: taluka
-            description: Taluka name
-  - name: tribal_health
-    description: "Tribal Health Education Data "
-    schema: staging_tribal_health_education_data_1  # Update this to match your actual schema name
-    tables:
-      - name: Health_Education
-        identifier: Health_Education  # Update this to match the actual table name in your database
-        description: "Health education session data including topics, locations, participants, and villages covered"
-        columns:
-          - name: date
-            description: "Date of the health education session"
-            data_type: date
-            
-          - name: select_the_health_education_topics_you_can_choose_more_than_one
-            description: "Health education topics selected for the session"
-            data_type: text
-            
-          - name: area
-            description: "Area where health education was conducted"
-            data_type: text
-            
-          - name: villages_in_karwafa_area
-            description: "Villages in Karwafa area covered"
-            data_type: text
-            
-          - name: villages_in_pendhari_area
-            description: "Villages in Pendhari area covered"
-            data_type: text
-            
-          - name: villages_in_dhanora_area
-            description: "Villages in Dhanora area covered"
-            data_type: text
-            
-          - name: villages_in_rangi_area
-            description: "Villages in Rangi area covered"
-            data_type: text
-            
-          - name: villages_in_murumgao_area
-            description: "Villages in Murumgao area covered"
-            data_type: text
-            
-          - name: was_health_education_session_conducted
-            description: "Whether the health education session was conducted (Yes/No)"
-            data_type: text
-            
-          - name: reason_for_not_conducting_session
-            description: "Reason provided if session was not conducted"
-            data_type: text
-            
-          - name: in_how_many_places_was_health_education_conducted_
-            description: "Number of places where health education was conducted"
-            data_type: number
-            
-          - name: location_1_name
-            description: "Name of location 1"
-            data_type: text
-            
-          - name: location_1_number_of_participants
-            description: "Number of participants at location 1"
-            data_type: number
-            
-          - name: location_2_name
-            description: "Name of location 2"
-            data_type: text
-            
-          - name: location_2_number_of_participants
-            description: "Number of participants at location 2"
-            data_type: number
-            
-          - name: location_3_name
-            description: "Name of location 3"
-            data_type: text
-            
-          - name: location_3_number_of_participants
-            description: "Number of participants at location 3"
-            data_type: number
-            
-          - name: location_4_name
-            description: "Name of location 4"
-            data_type: text
-            
-          - name: location_4_number_of_participants
-            description: "Number of participants at location 4"
-            data_type: number
-            
-          - name: total_number_of_participants
-            description: "Total number of participants across all locations"
-            data_type: number
-
-  - name: mental_health
-    description: Mental health chatbot screening data from Frappe/Glific via Airbyte
-    schema: staging_mental_health
-    tables:
-      - name: tabMH_Chatbot_Consultation_Glific
-        identifier: "tabMH_Chatbot_Consultation_Glific"
-        description: Patient mental health chatbot screening sessions including PHQ, GAD, and PADIS scores with AI and doctor diagnosis outputs
-        columns:
-          - name: Patient Identification Number
-            description: Unique patient identification number from source
-          - name: Creation
-            description: Record creation timestamp
-          - name: Modified
-            description: Record last modified timestamp
-          - name: Counselor Name
-            description: Name of the counselor
-          - name: Patient Name
-            description: Full name of the patient
-          - name: Patient Gender
-            description: Gender of the patient as entered in source
-          - name: Patient Age
-            description: Age of the patient as entered in source
-          - name: Patient Taluka
-            description: Taluka of the patient
-          - name: Patient District
-            description: District of the patient
-          - name: phq2_1
-            description: Patient's answer to PHQ-2 question 1, used as a quick first-pass depression screen.
-          - name: phq2_2
-            description: Patient's answer to PHQ-2 question 2, used as a quick first-pass depression screen.
-          - name: phq9_1_score
-            description: Patient's answer to PHQ-9 question 1 (full depression screening, asked if PHQ-2 flags a concern).
-          - name: phq9_2_score
-            description: Patient's answer to PHQ-9 question 2.
-          - name: phq9_3_score
-            description: Patient's answer to PHQ-9 question 3.
-          - name: phq9_4_score
-            description: Patient's answer to PHQ-9 question 4.
-          - name: phq9_5_score
-            description: Patient's answer to PHQ-9 question 5.
-          - name: phq9_7_score
-            description: Patient's answer to PHQ-9 question 7.
-          - name: phq9_8_score
-            description: Patient's answer to PHQ-9 question 8.
-          - name: phq9_9_score
-            description: Patient's answer to PHQ-9 question 9.
-          - name: phq9_10_score
-            description: Patient's answer to PHQ-9 question 10.
-          - name: phq9_11_score
-            description: Patient's answer to PHQ-9 question 11.
-          - name: phq_overall_score
-            description: Total PHQ score calculated from the patient's chatbot answers, indicating depression severity.
-          - name: gad2_1_score
-            description: Patient's answer to GAD-2 question 1, used as a quick first-pass anxiety screen.
-          - name: gad2_2_score
-            description: Patient's answer to GAD-2 question 2, used as a quick first-pass anxiety screen.
-          - name: gad7_1_score
-            description: Patient's answer to GAD-7 question 1 (full anxiety screening, asked if GAD-2 flags a concern).
-          - name: gad7_2_score
-            description: Patient's answer to GAD-7 question 2.
-          - name: gad7_3_score
-            description: Patient's answer to GAD-7 question 3.
-          - name: gad7_4_score
-            description: Patient's answer to GAD-7 question 4.
-          - name: gad7_5_score
-            description: Patient's answer to GAD-7 question 5.
-          - name: gad7_6_score
-            description: Patient's answer to GAD-7 question 6.
-          - name: gad7_7_score
-            description: Patient's answer to GAD-7 question 7.
-          - name: gad_overall_score
-            description: Total GAD score calculated from the patient's chatbot answers, indicating anxiety severity.
-          - name: padis1_score
-            description: Patient's answer to PADIS question 1, used to screen for panic disorder symptoms.
-          - name: padis2_score
-            description: Patient's answer to PADIS question 2.
-          - name: padis3_score
-            description: Patient's answer to PADIS question 3.
-          - name: padis4_score
-            description: Patient's answer to PADIS question 4.
-          - name: padis_overall_score
-            description: Total PADIS score calculated from the patient's chatbot answers, indicating panic disorder severity.
-          - name: pharmacotherapy_similarity_score
+    identifier: tabWorkshop_Questionnaire
+    description: NIRMAN Workshop Questionnaire responses with career, criteria, insecurities,
+      and questions data
+    columns:
+    - name: name
+      description: Unique identifier for the questionnaire response
+    - name: participant
+      description: Participant identifier
+    - name: workshop
+      description: Workshop identifier
+    - name: carrer_1
+      description: Government Service
+    - name: carrer_2
+      description: Job in Private Industry
+    - name: carrer_3
+      description: Social Entrepreneurship/Own NGO
+    - name: carrer_4
+      description: Own Business
+    - name: carrer_5
+      description: Academic (College/University)
+    - name: carrer_6
+      description: Working in NGO
+    - name: carrer_7
+      description: Confused / Not Decided
+    - name: carrer_8
+      description: Other
+    - name: criteria_1
+      description: Geographical Location
+    - name: criteria_2
+      description: Financial Security
+    - name: criteria_3
+      description: Work Satisfaction
+    - name: criteria_4
+      description: Cause of My work
+    - name: criteria_5
+      description: Career progress/growth
+    - name: criteria_6
+      description: Work Life Balance
+    - name: criteria_7
+      description: Financial Prosperity
+    - name: criteria_8
+      description: Job Security
+    - name: insecurities_1
+      description: Social Acceptability
+    - name: insecurities_2
+      description: Monetary Compensation
+    - name: insecurities_3
+      description: Response of Parents
+    - name: insecurities_4
+      description: Difficulty in finding the suitable life partner
+    - name: insecurities_5
+      description: Underutilisation of my talent and skills
+    - name: insecurities_6
+      description: Less comfortable lifestyle as compared to my usual peers
+    - name: insecurities_7
+      description: Not being Able to create any visible impact
+    - name: insecurities_8
+      description: Feeling professionally leftout
+    - name: insecurities_9
+      description: Lack of satisfaction at the end of life
+    - name: insecurities_10
+      description: Will my life be less Comfortable than it currently is
+    - name: social_contribution
+      description: During my productive lifetime I plan to engage in social contribution
+    - name: question_1
+      description: I feel happy about myself. I like who I am.
+    - name: question_2
+      description: I have a good understanding about various social issues around
+        me and their severity
+    - name: finance_1
+      description: Monthly income needed at age 25
+    - name: finance_2
+      description: Monthly income needed at age 30
+    - name: finance_3
+      description: Monthly income as per Financial sheet
+    - name: finance_4
+      description: Finance divided by 2
+- name: nirman
+  description: Nirman demographics data from frappe mariadb via Airbyte
+  schema: staging_nirman_demographics
+  tables:
+  - name: demographics_raw
+    identifier: tabNIRMANI_Details
+    description: Staging table for Nirman demographics data containing participant
+      information
+    columns:
+    - name: id
+      description: Unique identifier for each participant
+    - name: name
+      description: Participant's full name
+    - name: gender
+      description: Participant's gender
+    - name: batch
+      description: Batch or cohort identifier
+    - name: mobile
+      description: Mobile number
+    - name: email_id
+      description: Email address
+    - name: workshop_details
+      description: Workshop identifier or name
+    - name: nirman_krutee_nirman
+      description: Type of workshop (Nirman/Krutee)
+    - name: educational_degree
+      description: Educational degree
+    - name: educational_stream
+      description: Original detailed educational stream from source (Medical,Engineering
+        , Arts/Commerce/Science/Pharmacy)
+    - name: level_of_education
+      description: Education level (B for Bachelor's, M for Master's, P for PhD)
+    - name: current_status_of_work
+      description: Current employment or work status (DT/EdB/OW/Not Now/SIW/Student)
+    - name: workshop_month_and_year
+      description: Month and year when workshop was conducted
+    - name: age_at_the_time_of_the_workshop_
+      description: Age at the time of the workshop
+    - name: person_years_of_social_action_as_on_31_st_mar_22
+      description: Years of experience in social action work as of March 31, 2022
+    - name: person_years_of_social_action_as_on_31_st_mar_23
+      description: Years of experience in social action work as of March 31, 2023
+    - name: person_years_of_social_action_as_on_31_st_mar_24
+      description: Years of experience in social action work as of March 31, 2024
+    - name: person_years_of_social_action_as_on_31_st_mar_25
+      description: Years of experience in social action work as of March 31, 2025
+    - name: Native State
+      description: Participant's native state
+    - name: Native District
+      description: Participant's native district
+    - name: Native Tehsil/Town
+      description: Participant's native taluka
+- name: staging_village_master_data
+  schema: staging
+  tables:
+  - name: Matched Villages
+    identifier: Matched_Villages_
+    description: Master data for villages
+    columns:
+    - name: marathi
+      description: Village name in Marathi
+    - name: english
+      description: Village name in English
+    - name: district
+      description: District name
+    - name: taluka
+      description: Taluka name
+- name: tribal_health
+  description: 'Tribal Health Education Data '
+  schema: staging_tribal_health_education_data_1
+  tables:
+  - name: Health_Education
+    identifier: Health_Education
+    description: Health education session data including topics, locations, participants,
+      and villages covered
+    columns:
+    - name: date
+      description: Date of the health education session
+      data_type: date
+    - name: select_the_health_education_topics_you_can_choose_more_than_one
+      description: Health education topics selected for the session
+      data_type: text
+    - name: area
+      description: Area where health education was conducted
+      data_type: text
+    - name: villages_in_karwafa_area
+      description: Villages in Karwafa area covered
+      data_type: text
+    - name: villages_in_pendhari_area
+      description: Villages in Pendhari area covered
+      data_type: text
+    - name: villages_in_dhanora_area
+      description: Villages in Dhanora area covered
+      data_type: text
+    - name: villages_in_rangi_area
+      description: Villages in Rangi area covered
+      data_type: text
+    - name: villages_in_murumgao_area
+      description: Villages in Murumgao area covered
+      data_type: text
+    - name: was_health_education_session_conducted
+      description: Whether the health education session was conducted (Yes/No)
+      data_type: text
+    - name: reason_for_not_conducting_session
+      description: Reason provided if session was not conducted
+      data_type: text
+    - name: in_how_many_places_was_health_education_conducted_
+      description: Number of places where health education was conducted
+      data_type: number
+    - name: location_1_name
+      description: Name of location 1
+      data_type: text
+    - name: location_1_number_of_participants
+      description: Number of participants at location 1
+      data_type: number
+    - name: location_2_name
+      description: Name of location 2
+      data_type: text
+    - name: location_2_number_of_participants
+      description: Number of participants at location 2
+      data_type: number
+    - name: location_3_name
+      description: Name of location 3
+      data_type: text
+    - name: location_3_number_of_participants
+      description: Number of participants at location 3
+      data_type: number
+    - name: location_4_name
+      description: Name of location 4
+      data_type: text
+    - name: location_4_number_of_participants
+      description: Number of participants at location 4
+      data_type: number
+    - name: total_number_of_participants
+      description: Total number of participants across all locations
+      data_type: number
+- name: mental_health
+  description: Mental health chatbot screening data from Frappe/Glific via Airbyte
+  schema: staging_mental_health
+  tables:
+  - name: tabMH_Chatbot_Consultation_Glific
+    identifier: "tabMH_Chatbot_Consultation_Glific"
+    description: Patient mental health chatbot screening sessions including PHQ, GAD, and PADIS scores with AI and doctor diagnosis outputs
+    columns:
+  - name: Patient Identification Number
+    description: Unique patient identification number from source
+  - name: Creation
+    description: Record creation timestamp
+  - name: Modified
+    description: Record last modified timestamp
+  - name: Counselor Name
+    description: Name of the counselor
+  - name: Patient Name
+    description: Full name of the patient
+  - name: Patient Gender
+    description: Gender of the patient as entered in source
+  - name: Patient Age
+    description: Age of the patient as entered in source
+  - name: Patient Taluka
+    description: Taluka of the patient
+  - name: Patient District
+    description: District of the patient
+  - name: phq2_1
+    description: Patient's answer to PHQ-2 question 1, used as a quick first-pass depression screen.
+  - name: phq2_2
+    description: Patient's answer to PHQ-2 question 2, used as a quick first-pass depression screen.
+  - name: phq9_1_score
+    description: Patient's answer to PHQ-9 question 1 (full depression screening, asked if PHQ-2 flags a concern).
+  - name: phq9_2_score
+    description: Patient's answer to PHQ-9 question 2.
+  - name: phq9_3_score
+    description: Patient's answer to PHQ-9 question 3.
+  - name: phq9_4_score
+    description: Patient's answer to PHQ-9 question 4.
+  - name: phq9_5_score
+    description: Patient's answer to PHQ-9 question 5.
+  - name: phq9_7_score
+    description: Patient's answer to PHQ-9 question 7.
+  - name: phq9_8_score
+    description: Patient's answer to PHQ-9 question 8.
+  - name: phq9_9_score
+    description: Patient's answer to PHQ-9 question 9.
+  - name: phq9_10_score
+    description: Patient's answer to PHQ-9 question 10.
+  - name: phq9_11_score
+    description: Patient's answer to PHQ-9 question 11.
+  - name: phq_overall_score
+    description: Total PHQ score calculated from the patient's chatbot answers, indicating depression severity.
+  - name: gad2_1_score
+    description: Patient's answer to GAD-2 question 1, used as a quick first-pass anxiety screen.
+  - name: gad2_2_score
+    description: Patient's answer to GAD-2 question 2, used as a quick first-pass anxiety screen.
+  - name: gad7_1_score
+    description: Patient's answer to GAD-7 question 1 (full anxiety screening, asked if GAD-2 flags a concern).
+  - name: gad7_2_score
+    description: Patient's answer to GAD-7 question 2.
+  - name: gad7_3_score
+    description: Patient's answer to GAD-7 question 3.
+  - name: gad7_4_score
+    description: Patient's answer to GAD-7 question 4.
+  - name: gad7_5_score
+    description: Patient's answer to GAD-7 question 5.
+  - name: gad7_6_score
+    description: Patient's answer to GAD-7 question 6.
+  - name: gad7_7_score
+    description: Patient's answer to GAD-7 question 7.
+  - name: gad_overall_score
+    description: Total GAD score calculated from the patient's chatbot answers, indicating anxiety severity.
+  - name: padis1_score
+    description: Patient's answer to PADIS question 1, used to screen for panic disorder symptoms.
+  - name: padis2_score
+    description: Patient's answer to PADIS question 2.
+  - name: padis3_score
+    description: Patient's answer to PADIS question 3.
+  - name: padis4_score
+    description: Patient's answer to PADIS question 4.
+  - name: padis_overall_score
+    description: Total PADIS score calculated from the patient's chatbot answers, indicating panic disorder severity.
+  - name: pharmacotherapy_similarity_score
             description: How closely the chatbot/AI-suggested medication plan matches what the doctor actually prescribed, to 2 decimal places.
-          - name: psycoeducation_similarity_score
+  - name: psycoeducation_similarity_score
             description: How closely the chatbot/AI-generated diagnosis explanation matches the doctor's diagnosis, to 2 decimal places.
-          - name: human_psycoeducation_similarity_score
+  - name: human_psycoeducation_similarity_score
             description: A human reviewer's rating of how closely the chatbot/AI diagnosis explanation matches the doctor's diagnosis, to 2 decimal places.
-          - name: human_pharmacotherapy_similarity_score
+  - name: human_pharmacotherapy_similarity_score
             description: A human reviewer's rating of how closely the chatbot/AI medication suggestion matches the doctor's prescription, to 2 decimal places.
-  - name: referral_management
-    description: Referral management chatbot data from Frappe via Airbyte. Captures patient referrals raised by SEARCH field staff to hospital/OPD teams.
-    schema: staging_referral_management 
-    tables:
-      - name: tabPatient_Referral
-        identifier: "tabPatient_Referral"
-        description: Raw referral records from the chatbot — one row per referral raised by a field staff member (Supervisor/ASHA/MMU/MHD counsellor) for a patient needing hospital/OPD care
-        columns:
-          - name: reference_number
-            description: Unique referral code issued by the chatbot to the field staff member
-          - name: referral_date
-            description: Date the referral was raised
-          - name: phc
-            description: PHC / village catchment area the field staff member was operating in
-          - name: referrer_department
-            description: Team/department of the field staff member who raised the referral (e.g. MMU, MHD)
-          - name: referrer_name
-            description: Name of the field staff member who raised the referral
-          - name: patient_name
-            description: Name of the patient being referred
-          - name: patient_age
-            description: Age of the patient as entered in source
-          - name: patient_gender
-            description: Gender of the patient as entered in source
-          - name: opd_departments
-            description: Hospital OPD department the patient was referred to
-          - name: modified
-            description: Record last modified timestamp, used for de-duplication
+- name: referral_management
+  description: Referral management chatbot data from Frappe via Airbyte. Captures patient referrals raised by SEARCH field staff to hospital/OPD teams.
+  schema: staging_referral_management 
+  tables:
+  - name: tabPatient_Referral
+    identifier: "tabPatient_Referral"
+    description: Raw referral records from the chatbot — one row per referral raised by a field staff member (Supervisor/ASHA/MMU/MHD counsellor) for a patient needing hospital/OPD care
+    columns:
+  - name: reference_number
+    description: Unique referral code issued by the chatbot to the field staff member
+  - name: referral_date
+    description: Date the referral was raised
+  - name: phc
+    description: PHC / village catchment area the field staff member was operating in
+  - name: referrer_department
+    description: Team/department of the field staff member who raised the referral (e.g. MMU, MHD)
+  - name: referrer_name
+    description: Name of the field staff member who raised the referral
+  - name: patient_name
+    description: Name of the patient being referred
+  - name: patient_age
+    description: Age of the patient as entered in source
+  - name: patient_gender
+    description: Gender of the patient as entered in source
+  - name: opd_departments
+    description: Hospital OPD department the patient was referred to
+  - name: modified
+    description: Record last modified timestamp, used for de-duplication
+  - name: patient_taluka
+    description: Taluka (sub-district) of the patient as entered in source

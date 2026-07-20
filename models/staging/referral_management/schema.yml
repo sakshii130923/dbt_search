@@ -77,3 +77,7 @@ models:
           The hospital OPD department the patient was referred to for treatment
           (sourced from the chatbot's "Opd Departments" field) — e.g. Orthopedics,
           Gynaecology, etc. Free text, trimmed.
+      - name: patient_taluka
+        description: >
+          The taluka (sub-district) of the patient being referred, as recorded by the
+          field staff member in the chatbot. Free text, trimmed.

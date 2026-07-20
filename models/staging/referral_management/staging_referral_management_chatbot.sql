@@ -13,6 +13,7 @@ with source as (
         patient_name,
         patient_age,
         patient_gender,
+        patient_taluka,
         opd_departments           as referred_to_department,
         modified                  as _modified_at   -- used only for de-dup ordering, dropped later
     from {{ source('referral_management', 'tabPatient_Referral') }}
@@ -76,7 +77,8 @@ cleaned as (
             when lower(trim(patient_gender)) = 'other'   then 'Other'
             else null
         end                                                                   as patient_gender,
-
+         -- patient_taluka: plain text, trimmed
+        trim(patient_taluka)::text                                            as patient_taluka,
         -- referred_to_department: plain text, trimmed
         trim(referred_to_department)::text                                    as referred_to_department
 

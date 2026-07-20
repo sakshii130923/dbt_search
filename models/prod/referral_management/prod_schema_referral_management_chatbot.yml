@@ -58,3 +58,7 @@ models:
         description: Hospital OPD department the patient was referred to.
         tests:
           - not_null
+
+      - name: patient_taluka
+        description: Taluka (sub-district) of the referred patient.
+        
