@@ -534,13 +534,13 @@ sources:
   - name: padis_overall_score
     description: Total PADIS score calculated from the patient's chatbot answers, indicating panic disorder severity.
   - name: pharmacotherapy_similarity_score
-            description: How closely the chatbot/AI-suggested medication plan matches what the doctor actually prescribed, to 2 decimal places.
+    description: How closely the chatbot/AI-suggested medication plan matches what the doctor actually prescribed, to 2 decimal places.
   - name: psycoeducation_similarity_score
-            description: How closely the chatbot/AI-generated diagnosis explanation matches the doctor's diagnosis, to 2 decimal places.
+    description: How closely the chatbot/AI-generated diagnosis explanation matches the doctor's diagnosis, to 2 decimal places.
   - name: human_psycoeducation_similarity_score
-            description: A human reviewer's rating of how closely the chatbot/AI diagnosis explanation matches the doctor's diagnosis, to 2 decimal places.
+    description: A human reviewer's rating of how closely the chatbot/AI diagnosis explanation matches the doctor's diagnosis, to 2 decimal places.
   - name: human_pharmacotherapy_similarity_score
-            description: A human reviewer's rating of how closely the chatbot/AI medication suggestion matches the doctor's prescription, to 2 decimal places.
+    description: A human reviewer's rating of how closely the chatbot/AI medication suggestion matches the doctor's prescription, to 2 decimal places.
 - name: referral_management
   description: Referral management chatbot data from Frappe via Airbyte. Captures patient referrals raised by SEARCH field staff to hospital/OPD teams.
   schema: staging_referral_management 
