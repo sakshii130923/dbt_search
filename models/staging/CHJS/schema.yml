@@ -1,0 +1,108 @@
+version: 2
+models:
+- name: seeds_chjs_codes
+  columns:
+  - name: code_type
+    description: Type of code, indicating the category or classification of the diagnosis.
+  - name: code
+    description: Unique identifier for each specific diagnosis within the code type.
+  - name: description
+    description: Detailed description of the diagnosis corresponding to the code.
+- name: staging_chjs_new_patients
+  columns:
+  - name: registration_no
+    description: Unique identifier for the patient registration.
+  - name: patient_name
+    description: Full name of the patient.
+  - name: age
+    description: Age of the patient in years.
+  - name: gender_code
+    description: Code representing the gender of the patient.
+  - name: visit_date
+    description: Date of the patient visit in YYYY-MM-DD format.
+  - name: visit_month
+    description: Month of the patient visit, derived from visit_date.
+  - name: visit_year
+    description: Year of the patient visit, derived from visit_date.
+  - name: speciality_code
+    description: Code representing the medical specialty consulted.
+  - name: area_affected_code
+    description: Code indicating the area of the body affected.
+  - name: opd_session
+    description: Session type for the outpatient department visit.
+  - name: type_label
+    description: Human-readable label for the type of visit.
+  - name: n_diagnosis_1_code
+    description: Code for the primary diagnosis.
+  - name: n_advice_1_code
+    description: Code for the primary advice given.
+  - name: n_diagnosis_2_code
+    description: Code for the secondary diagnosis.
+  - name: n_advice_2_code
+    description: Code for the secondary advice given.
+  - name: n_diagnosis_3_code
+    description: Code for the tertiary diagnosis.
+  - name: n_advice_3_code
+    description: Code for the tertiary advice given.
+  - name: red_flag_code
+    description: Code indicating the presence of a red flag symptom.
+  - name: red_flag_description
+    description: Description of the red flag symptom, normalized.
+  - name: mri_suggested_code
+    description: Code indicating if an MRI was suggested.
+  - name: mri_referred_code
+    description: Code indicating if the patient was referred for an MRI.
+  - name: xray_mri_done_code
+    description: Code indicating if an X-ray or MRI was already done.
+  - name: other_diagnosis_1
+    description: Free text field for additional diagnosis information.
+  - name: other_diagnosis_2
+    description: Free text field for additional diagnosis information.
+  - name: other_diagnosis_3
+    description: Free text field for additional diagnosis information.
+  - name: patient_type
+    description: Indicator of the patient type, set to 'New' for new patients.
+- name: staging_chjs_followup_patients
+  columns:
+  - name: registration_no
+    description: Unique identifier for the patient's registration.
+  - name: patient_name
+    description: Full name of the patient.
+  - name: age
+    description: Age of the patient at the time of the visit.
+  - name: gender_code
+    description: Coded representation of the patient's gender.
+  - name: visit_date
+    description: Date of the patient visit in YYYY-MM-DD format.
+  - name: visit_month
+    description: Month of the patient visit, derived from visit_date.
+  - name: visit_year
+    description: Year of the patient visit, derived from visit_date.
+  - name: speciality_code
+    description: Coded representation of the medical specialty involved in the patient's
+      care.
+  - name: area_affected_code
+    description: Coded representation of the area affected in the patient's condition.
+  - name: opd_session
+    description: Description of the outpatient department session, formatted as DD/MM/YYYY-Type.
+  - name: type_label
+    description: Human-readable label for the type of visit, derived from type_code.
+  - name: n_diagnosis_1_code
+    description: Coded representation of the primary diagnosis.
+  - name: n_advice_1_code
+    description: Coded representation of the primary advice given to the patient.
+  - name: red_flag_code
+    description: Coded indicator of any red flags noted during the visit.
+  - name: red_flag_description
+    description: Description of the red flag, normalized and expanded from common
+      abbreviations.
+  - name: mri_suggested_code
+    description: Coded indicator of whether an MRI was suggested.
+  - name: mri_referred_code
+    description: Coded indicator of whether the patient was referred for an MRI.
+  - name: patient_return_with_mri_code
+    description: Coded indicator of whether the patient returned with MRI results.
+  - name: other_daignosis
+    description: Free text field for any additional diagnoses noted.
+  - name: patient_type
+    description: Indicator of the patient type, set to 'Follow-up'.

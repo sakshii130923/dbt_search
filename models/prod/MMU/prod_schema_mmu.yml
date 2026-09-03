@@ -1,0 +1,62 @@
+version: 2
+models:
+- name: mmu_dashboard_combined
+  description: 'Production-ready MMU dashboard table combining deduplicated records
+    from both MMU source systems (MMU1 and MMU2). Deduplication uses a window function
+    partitioned by patient_unique_id, visit_date, serial_no, and source_system, keeping
+    the most recently loaded row. Adds a formatted visit_week label and visit_month/visit_year
+    columns for dashboard filtering.
+
+    '
+  columns:
+  - name: serial_no
+    description: Serial number of the record
+    tests:
+    - not_null
+  - name: patient_unique_id
+    description: Unique identifier for the patient
+    tests:
+    - not_null
+  - name: patient_name
+    description: Patient full name
+  - name: gender
+    description: Patient gender (lowercased)
+  - name: age_years
+    description: Patient age in years
+  - name: age_group
+    description: 'Age bucket: 0-1, 1-5, 6-12, 13-17, 18-30, 31-45, 46-60, 60+, or
+      Unknown'
+  - name: area
+    description: Area where the patient is from
+  - name: village
+    description: Village name
+  - name: diagnosis1
+    description: Primary diagnosis
+  - name: diagnosis2
+    description: Secondary diagnosis
+  - name: diagnosis3
+    description: Third diagnosis
+  - name: diagnosis4
+    description: Fourth diagnosis
+  - name: diagnosis5
+    description: Fifth diagnosis
+  - name: is_referred
+    description: Whether the patient was referred (boolean)
+  - name: is_newly_diagnosed
+    description: Whether the patient is newly diagnosed (boolean)
+  - name: is_followup
+    description: Whether this is a follow-up visit (boolean)
+  - name: visit_date
+    description: Date of the patient visit
+  - name: visit_week
+    description: 'Formatted week label: ''Week N(Mon DD-Mon DD)'' or ''Unknown'''
+  - name: submitted_by
+    description: Name of person who submitted the record
+  - name: doctor_name
+    description: Attending doctor name
+  - name: source_system
+    description: 'Source identifier: MMU1 or MMU2'
+  - name: visit_month
+    description: 'Formatted month: MM-MonthName (e.g. 09-September) or ''Unknown'''
+  - name: visit_year
+    description: Four-digit year as text, or 'Unknown'

@@ -1,0 +1,60 @@
+version: 2
+models:
+- name: int_chjs_combined_patients
+  columns:
+  - name: registration_no
+    description: Unique identifier for the patient's registration.
+  - name: patient_name
+    description: Full name of the patient.
+  - name: age
+    description: Age of the patient at the time of visit.
+  - name: gender_code
+    description: Coded representation of the patient's gender.
+  - name: visit_date
+    description: Date of the patient visit in YYYY-MM-DD format.
+  - name: visit_month
+    description: Month of the patient visit in MM format.
+  - name: visit_year
+    description: Year of the patient visit in YYYY format.
+  - name: patient_type
+    description: Classification of the patient as new or follow-up.
+  - name: type
+    description: Human-readable label for the patient type.
+  - name: speciality_code
+    description: Coded representation of the medical specialty involved.
+  - name: area_affected_code
+    description: Coded representation of the area affected in the patient.
+  - name: n_diagnosis_1_code
+    description: Code for the primary diagnosis.
+  - name: n_advice_1_code
+    description: Code for the primary advice given.
+  - name: n_diagnosis_2_code
+    description: Code for the secondary diagnosis.
+  - name: n_advice_2_code
+    description: Code for the secondary advice given.
+  - name: n_diagnosis_3_code
+    description: Code for the tertiary diagnosis.
+  - name: n_advice_3_code
+    description: Code for the tertiary advice given.
+  - name: red_flag_code
+    description: Coded indication of any red flags identified.
+  - name: red_flag_description
+    description: Description of the red flags identified.
+  - name: mri_suggested_code
+    description: Code indicating if an MRI was suggested.
+  - name: mri_referred_code
+    description: Code indicating if the patient was referred for an MRI.
+  - name: patient_return_with_mri_code
+    description: Code indicating if the patient returned with MRI results.
+  - name: xray_mri_done_code
+    description: Code indicating if an X-ray or MRI was completed.
+  - name: other_diagnosis_1
+    description: Text description of an additional diagnosis.
+  - name: other_diagnosis_2
+    description: Text description of another additional diagnosis.
+  - name: other_diagnosis_3
+    description: Text description of a third additional diagnosis.
+  - name: other_daignosis
+    description: Text description of any other diagnosis.
+  - name: opd_session
+    description: Identifier for the outpatient department session.

@@ -1,0 +1,20 @@
+version: 2
+models:
+- name: int_nirman_questionnaire
+  columns:
+  - name: participant_id
+    description: Unique identifier for each participant in the questionnaire.
+  - name: participant_name
+    description: Full name of the participant who completed the questionnaire.
+  - name: workshop_name
+    description: Name of the workshop attended by the participant.
+  - name: workshop_phase
+    description: Phase of the workshop during which the questionnaire was completed.
+  - name: batch
+    description: Batch number associated with the participant's workshop session.
+  - name: question_code
+    description: Code representing the specific questionnaire question being answered.
+  - name: response_int
+    description: Numeric response to the questionnaire question, if applicable.
+  - name: response_text
+    description: Textual response to the questionnaire question.

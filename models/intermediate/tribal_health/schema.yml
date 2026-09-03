@@ -1,0 +1,28 @@
+version: 2
+models:
+- name: int_tribal_healtheducation
+  columns:
+  - name: date
+    description: Date of the health education session in YYYY-MM-DD format.
+  - name: health_education_topics
+    description: Topics covered during the health education session.
+  - name: area
+    description: Identifier for the geographic area where the session was conducted.
+  - name: area_name
+    description: Name of the specific area where the session was conducted.
+  - name: village_name
+    description: Name of the village within the area where the session was conducted.
+  - name: session_conducted
+    description: Indicator of whether the session was conducted (true/false).
+  - name: reason_for_not_conducting_session
+    description: Reason provided for not conducting the session, if applicable.
+  - name: number_of_locations
+    description: Total number of locations where the session was planned.
+  - name: location_sequence
+    description: Sequence number indicating the order of locations.
+  - name: location_name
+    description: Name of the specific location where participants attended.
+  - name: participants
+    description: Number of participants at the specific location.
+  - name: total_number_of_participants
+    description: Total number of participants across all locations for the session.

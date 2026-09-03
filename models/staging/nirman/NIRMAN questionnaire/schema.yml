@@ -1,0 +1,377 @@
+version: 2
+models:
+- name: staging_nirman_questions_lookup
+  columns:
+  - name: question_code
+    description: Unique identifier for each question in the lookup table.
+  - name: category
+    description: Classification of the question into a specific category, such as
+      career or criteria.
+  - name: question_text
+    description: Full text description of the question for human readability.
+  - name: short_question_text
+    description: Abbreviated version of the question text, if available; otherwise,
+      null.
+- name: staging_nirman_questionnaire
+  columns:
+  - name: participant_id
+    description: Unique identifier for each participant in the questionnaire.
+  - name: participant_name
+    description: Full name of the participant.
+  - name: workshop_name
+    description: Name of the workshop attended by the participant.
+  - name: workshop_phase
+    description: Phase of the workshop during which the questionnaire was completed.
+  - name: batch
+    description: Batch number associated with the participant's workshop.
+  - name: carrer_1
+    description: Response to the first career-related question.
+  - name: carrer_2
+    description: Response to the second career-related question.
+  - name: carrer_3
+    description: Response to the third career-related question.
+  - name: carrer_4
+    description: Response to the fourth career-related question.
+  - name: carrer_5
+    description: Response to the fifth career-related question.
+  - name: carrer_6
+    description: Response to the sixth career-related question.
+  - name: carrer_7
+    description: Response to the seventh career-related question.
+  - name: carrer_8
+    description: Response to the eighth career-related question.
+  - name: criteria_1
+    description: Response to the first criteria-related question.
+  - name: criteria_2
+    description: Response to the second criteria-related question.
+  - name: criteria_3
+    description: Response to the third criteria-related question.
+  - name: criteria_4
+    description: Response to the fourth criteria-related question.
+  - name: criteria_5
+    description: Response to the fifth criteria-related question.
+  - name: criteria_6
+    description: Response to the sixth criteria-related question.
+  - name: criteria_7
+    description: Response to the seventh criteria-related question.
+  - name: criteria_8
+    description: Response to the eighth criteria-related question.
+  - name: criteria_9
+    description: Response to the ninth criteria-related question.
+  - name: insecurities_1
+    description: Response to the first insecurity-related question.
+  - name: insecurities_2
+    description: Response to the second insecurity-related question.
+  - name: insecurities_3
+    description: Response to the third insecurity-related question.
+  - name: insecurities_4
+    description: Response to the fourth insecurity-related question.
+  - name: insecurities_5
+    description: Response to the fifth insecurity-related question.
+  - name: insecurities_6
+    description: Response to the sixth insecurity-related question.
+  - name: insecurities_7
+    description: Response to the seventh insecurity-related question.
+  - name: insecurities_8
+    description: Response to the eighth insecurity-related question.
+  - name: insecurities_9
+    description: Response to the ninth insecurity-related question.
+  - name: insecurities_10
+    description: Response to the tenth insecurity-related question.
+  - name: social_contribution
+    description: Standardized response indicating the participant's level of social
+      contribution.
+  - name: question_1
+    description: Response to the first general question.
+  - name: question_2
+    description: Response to the second general question.
+  - name: question_3
+    description: Response to the third general question.
+  - name: question_4
+    description: Response to the fourth general question.
+  - name: question_5
+    description: Response to the fifth general question.
+  - name: question_6
+    description: Response to the sixth general question.
+  - name: question_7
+    description: Response to the seventh general question.
+  - name: question_8
+    description: Response to the eighth general question.
+  - name: question_9
+    description: Response to the ninth general question.
+  - name: question_10
+    description: Response to the tenth general question.
+  - name: question_11
+    description: Response to the eleventh general question.
+  - name: question_12
+    description: Response to the twelfth general question.
+  - name: question_13
+    description: Response to the thirteenth general question.
+  - name: question_14
+    description: Response to the fourteenth general question.
+  - name: question_15
+    description: Response to the fifteenth general question.
+  - name: question_16
+    description: Response to the sixteenth general question.
+  - name: question_17
+    description: Response to the seventeenth general question.
+  - name: question_18
+    description: Response to the eighteenth general question.
+  - name: question_19
+    description: Response to the nineteenth general question.
+  - name: question_20
+    description: Response to the twentieth general question.
+  - name: question_21
+    description: Response to the twenty-first general question.
+  - name: question_22
+    description: Response to the twenty-second general question.
+  - name: question_23
+    description: Response to the twenty-third general question.
+  - name: question_24
+    description: Response to the twenty-fourth general question.
+  - name: question_25
+    description: Response to the twenty-fifth general question.
+  - name: question_26
+    description: Response to the twenty-sixth general question.
+  - name: question_27
+    description: Response to the twenty-seventh general question.
+  - name: question_28
+    description: Response to the twenty-eighth general question.
+  - name: question_29
+    description: Response to the twenty-ninth general question.
+  - name: question_30
+    description: Response to the thirtieth general question.
+  - name: question_31
+    description: Response to the thirty-first general question.
+  - name: question_32
+    description: Response to the thirty-second general question.
+  - name: question_33
+    description: Response to the thirty-third general question.
+  - name: question_34
+    description: Response to the thirty-fourth general question.
+  - name: question_35
+    description: Response to the thirty-fifth general question.
+  - name: question_36
+    description: Response to the thirty-sixth general question.
+  - name: question_37
+    description: Response to the thirty-seventh general question.
+  - name: question_38
+    description: Response to the thirty-eighth general question.
+  - name: question_39
+    description: Response to the thirty-ninth general question.
+  - name: question_40
+    description: Response to the fortieth general question.
+  - name: question_41
+    description: Response to the forty-first general question.
+  - name: question_42
+    description: Response to the forty-second general question.
+  - name: question_43
+    description: Response to the forty-third general question.
+  - name: question_44
+    description: Response to the forty-fourth general question.
+  - name: question_45
+    description: Response to the forty-fifth general question.
+  - name: question_46
+    description: Response to the forty-sixth general question.
+  - name: question_47
+    description: Response to the forty-seventh general question.
+  - name: question_48
+    description: Response to the forty-eighth general question.
+  - name: question_49
+    description: Response to the forty-ninth general question.
+  - name: question_50
+    description: Response to the fiftieth general question.
+  - name: question_51
+    description: Response to the fifty-first general question.
+  - name: question_52
+    description: Response to the fifty-second general question.
+  - name: question_53
+    description: Response to the fifty-third general question.
+  - name: question_54
+    description: Response to the fifty-fourth general question.
+  - name: question_55
+    description: Response to the fifty-fifth general question.
+  - name: question_56
+    description: Response to the fifty-sixth general question.
+  - name: question_57
+    description: Response to the fifty-seventh general question.
+  - name: question_58
+    description: Response to the fifty-eighth general question.
+  - name: question_59
+    description: Response to the fifty-ninth general question.
+  - name: question_60
+    description: Response to the sixtieth general question.
+  - name: question_61
+    description: Response to the sixty-first general question.
+  - name: question_62
+    description: Response to the sixty-second general question.
+  - name: question_63
+    description: Response to the sixty-third general question.
+  - name: question_64
+    description: Response to the sixty-fourth general question.
+  - name: question_65
+    description: Response to the sixty-fifth general question.
+  - name: question_66
+    description: Response to the sixty-sixth general question.
+  - name: question_67
+    description: Response to the sixty-seventh general question.
+  - name: question_68
+    description: Response to the sixty-eighth general question.
+  - name: question_69
+    description: Response to the sixty-ninth general question.
+  - name: question_70
+    description: Response to the seventieth general question.
+  - name: question_71
+    description: Response to the seventy-first general question.
+  - name: question_72
+    description: Response to the seventy-second general question.
+  - name: question_73
+    description: Response to the seventy-third general question.
+  - name: question_74
+    description: Response to the seventy-fourth general question.
+  - name: question_75
+    description: Response to the seventy-fifth general question.
+  - name: question_76
+    description: Response to the seventy-sixth general question.
+  - name: question_77
+    description: Response to the seventy-seventh general question.
+  - name: question_78
+    description: Response to the seventy-eighth general question.
+  - name: question_79
+    description: Response to the seventy-ninth general question.
+  - name: question_80
+    description: Response to the eightieth general question.
+  - name: question_81
+    description: Response to the eighty-first general question.
+  - name: question_82
+    description: Response to the eighty-second general question.
+  - name: question_83
+    description: Response to the eighty-third general question.
+  - name: question_84
+    description: Response to the eighty-fourth general question.
+  - name: question_85
+    description: Response to the eighty-fifth general question.
+  - name: question_86
+    description: Response to the eighty-sixth general question.
+  - name: question_87
+    description: Response to the eighty-seventh general question.
+  - name: question_88
+    description: Response to the eighty-eighth general question.
+  - name: question_89
+    description: Response to the eighty-ninth general question.
+  - name: question_90
+    description: Response to the ninetieth general question.
+  - name: question_91
+    description: Response to the ninety-first general question.
+  - name: question_92
+    description: Response to the ninety-second general question.
+  - name: question_93
+    description: Response to the ninety-third general question.
+  - name: question_94
+    description: Response to the ninety-fourth general question.
+  - name: question_95
+    description: Response to the ninety-fifth general question.
+  - name: question_96
+    description: Response to the ninety-sixth general question.
+  - name: question_97
+    description: Response to the ninety-seventh general question.
+  - name: question_98
+    description: Response to the ninety-eighth general question.
+  - name: question_99
+    description: Response to the ninety-ninth general question.
+  - name: question_100
+    description: Response to the one-hundredth general question.
+  - name: question_101
+    description: Response to the one-hundred-and-first general question.
+  - name: question_102
+    description: Response to the one-hundred-and-second general question.
+  - name: question_103
+    description: Response to the one-hundred-and-third general question.
+  - name: question_104
+    description: Response to the one-hundred-and-fourth general question.
+  - name: question_105
+    description: Response to the one-hundred-and-fifth general question.
+  - name: question_106
+    description: Response to the one-hundred-and-sixth general question.
+  - name: question_107
+    description: Response to the one-hundred-and-seventh general question.
+  - name: question_108
+    description: Response to the one-hundred-and-eighth general question.
+  - name: question_109
+    description: Response to the one-hundred-and-ninth general question.
+  - name: question_110
+    description: Response to the one-hundred-and-tenth general question.
+  - name: question_111
+    description: Response to the one-hundred-and-eleventh general question.
+  - name: question_112
+    description: Response to the one-hundred-and-twelfth general question.
+  - name: question_113
+    description: Response to the one-hundred-and-thirteenth general question.
+  - name: question_114
+    description: Response to the one-hundred-and-fourteenth general question.
+  - name: question_115
+    description: Response to the one-hundred-and-fifteenth general question.
+  - name: question_116
+    description: Response to the one-hundred-and-sixteenth general question.
+  - name: question_117
+    description: Response to the one-hundred-and-seventeenth general question.
+  - name: question_118
+    description: Response to the one-hundred-and-eighteenth general question.
+  - name: question_119
+    description: Response to the one-hundred-and-nineteenth general question.
+  - name: question_120
+    description: Response to the one-hundred-and-twentieth general question.
+  - name: question_121
+    description: Response to the one-hundred-and-twenty-first general question.
+  - name: question_122
+    description: Response to the one-hundred-and-twenty-second general question.
+  - name: question_123
+    description: Response to the one-hundred-and-twenty-third general question.
+  - name: question_124
+    description: Response to the one-hundred-and-twenty-fourth general question.
+  - name: question_125
+    description: Response to the one-hundred-and-twenty-fifth general question.
+  - name: question_126
+    description: Response to the one-hundred-and-twenty-sixth general question.
+  - name: question_127
+    description: Response to the one-hundred-and-twenty-seventh general question.
+  - name: question_128
+    description: Response to the one-hundred-and-twenty-eighth general question.
+  - name: question_129
+    description: Response to the one-hundred-and-twenty-ninth general question.
+  - name: question_130
+    description: Response to the one-hundred-and-thirtieth general question.
+  - name: question_131
+    description: Response to the one-hundred-and-thirty-first general question.
+  - name: question_132
+    description: Response to the one-hundred-and-thirty-second general question.
+  - name: question_133
+    description: Response to the one-hundred-and-thirty-third general question.
+  - name: question_134
+    description: Response to the one-hundred-and-thirty-fourth general question.
+  - name: question_135
+    description: Response to the one-hundred-and-thirty-fifth general question.
+  - name: question_136
+    description: Response to the one-hundred-and-thirty-sixth general question.
+  - name: question_137
+    description: Response to the one-hundred-and-thirty-seventh general question.
+  - name: question_138
+    description: Response to the one-hundred-and-thirty-eighth general question.
+  - name: question_139
+    description: Response to the one-hundred-and-thirty-ninth general question.
+  - name: question_140
+    description: Response to the one-hundred-and-fortieth general question.
+  - name: question_141
+    description: Response to the one-hundred-and-forty-first general question.
+  - name: question_142
+    description: Response to the one-hundred-and-forty-second general question.
+  - name: finance_1
+    description: Response to the first finance-related question.
+  - name: finance_2
+    description: Response to the second finance-related question.
+  - name: finance_3
+    description: Response to the third finance-related question.
+  - name: finance_4
+    description: Response to the fourth finance-related question.
+  - name: finance_5
+    description: Response to the fifth finance-related question.

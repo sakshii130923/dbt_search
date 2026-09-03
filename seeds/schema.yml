@@ -1,0 +1,41 @@
+version: 2
+seeds:
+- name: villages
+  columns:
+  - name: village_name
+    description: Name of the village.
+- name: raw_villages_sample
+  columns:
+  - name: village_column
+    description: Name or identifier of the village in the sample dataset.
+- name: state_master
+  columns:
+  - name: state_name
+    description: Name of the state or province.
+  - name: country
+    description: Name of the country to which the state or province belongs.
+- name: village_mapping
+  columns:
+  - name: raw_name
+    description: Original name of the village as recorded in the source data.
+  - name: canonical_name
+    description: Standardized name of the village used for consistent reference across
+      datasets.
+- name: maharashtra_district_master
+  columns:
+  - name: district_name
+    description: Name of the district within Maharashtra.
+  - name: state
+    description: Name of the state, which is Maharashtra.
+  - name: country
+    description: Name of the country, which is India.
+- name: maharashtra_taluka_master
+  columns:
+  - name: tehsil_name
+    description: Name of the tehsil or taluka within the state of Maharashtra.
+  - name: district
+    description: Name of the district in which the tehsil is located.
+  - name: state
+    description: Name of the state, which is Maharashtra.
+  - name: country
+    description: Name of the country, which is India.

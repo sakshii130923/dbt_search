@@ -1,0 +1,23 @@
+version: 2
+models:
+- name: prod_village_master
+  description: 'Production-ready village master reference table. Cleans the matched
+    villages source by trimming whitespace and filtering out any rows where marathi,
+    english, district, or taluka are null or empty strings.'
+  columns:
+  - name: marathi
+    description: Village name in Marathi script
+    tests:
+    - not_null
+  - name: english
+    description: Village name in English
+    tests:
+    - not_null
+  - name: district
+    description: District name the village belongs to
+    tests:
+    - not_null
+  - name: taluka
+    description: Taluka name the village belongs to
+    tests:
+    - not_null

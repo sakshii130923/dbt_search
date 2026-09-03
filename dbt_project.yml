@@ -15,16 +15,34 @@ flags:
   require_explicit_package_overrides_for_builtin_materializations: false
 
 models:
-  dbt_search:                      # ← your actual project name
-    staging:                  # your intermediate folder
-      +materialized: table       
-    prod:                  # your intermediate folder
-      +materialized: table    
+  dbt_search:
+    staging:
+      +materialized: table
+      +dbt-osmosis: "schema.yml"
+    intermediate:
+      +materialized: table
+      +dbt-osmosis: "schema.yml"
+    prod:
+      +materialized: table
+      CHJS:
+        +dbt-osmosis: "prod_schema_chjs.yml"
+      MMU:
+        +dbt-osmosis: "prod_schema_mmu.yml"
+      NIRMAN:
+        +dbt-osmosis: "prod_schema_nirman.yml"
+      tribal_health:
+        +dbt-osmosis: "prod_schema_tribal_health.yml"
+      Villages_Master:
+        +dbt-osmosis: "prod_schema_villages_master.yml"
+seeds:
+  dbt_search:
+    +dbt-osmosis: "schema.yml"
+
 
   elementary:
     +schema: "elementary"
 
 vars:
-  state_similarity_threshold: 0.65    # tighter — state names are short, false positives risky
+  state_similarity_threshold: 0.65
   district_similarity_threshold: 0.55
   tehsil_similarity_threshold: 0.55

@@ -1,0 +1,93 @@
+version: 2
+models:
+- name: prod_mental_health_chatbot
+  description: >
+    Production model for mental health chatbot screening sessions, built on
+    top of stg_mental_health_chatbot. Same data and columns as staging,
+    with exact duplicate rows removed, patient_registration_id and
+    patient_name enforced as not null, and only one row kept per
+    patient_registration_id (the oldest record, by modified_at, is kept
+    if the same id appears more than once).
+  columns:
+  - name: patient_registration_id
+    description: Unique patient registration ID. Enforced as unique and not null in this model.
+  - name: creation_date
+    description: Date the chatbot session/record was created.
+  - name: modified_at
+    description: Timestamp the record was last modified.
+  - name: counselor_name
+    description: Name of the counselor who helped the patient go through the chatbot session.
+  - name: patient_name
+    description: Full name of the patient who took the screening. Enforced as not null in this model.
+  - name: patient_gender
+    description: Standardised gender of the patient (Male or Female).
+  - name: patient_age
+    description: Age of the patient, validated to be between 1 and 120.
+  - name: patient_taluka
+    description: Taluka of the patient.
+  - name: patient_district
+    description: District of the patient.
+  - name: phq2_1
+    description: Patient's answer to PHQ-2 question 1, used as a quick first-pass depression screen.
+  - name: phq2_2
+    description: Patient's answer to PHQ-2 question 2, used as a quick first-pass depression screen.
+  - name: phq9_1_score
+    description: Patient's answer to PHQ-9 question 1 (full depression screening, asked if PHQ-2 flags a concern).
+  - name: phq9_2_score
+    description: Patient's answer to PHQ-9 question 2.
+  - name: phq9_3_score
+    description: Patient's answer to PHQ-9 question 3.
+  - name: phq9_4_score
+    description: Patient's answer to PHQ-9 question 4.
+  - name: phq9_5_score
+    description: Patient's answer to PHQ-9 question 5.
+  - name: phq9_7_score
+    description: Patient's answer to PHQ-9 question 7.
+  - name: phq9_8_score
+    description: Patient's answer to PHQ-9 question 8.
+  - name: phq9_9_score
+    description: Patient's answer to PHQ-9 question 9.
+  - name: phq9_10_score
+    description: Patient's answer to PHQ-9 question 10.
+  - name: phq9_11_score
+    description: Patient's answer to PHQ-9 question 11.
+  - name: phq_overall_score
+    description: Total PHQ score calculated from the patient's chatbot answers, indicating depression severity.
+  - name: gad2_1_score
+    description: Patient's answer to GAD-2 question 1, used as a quick first-pass anxiety screen.
+  - name: gad2_2_score
+    description: Patient's answer to GAD-2 question 2, used as a quick first-pass anxiety screen.
+  - name: gad7_1_score
+    description: Patient's answer to GAD-7 question 1 (full anxiety screening, asked if GAD-2 flags a concern).
+  - name: gad7_2_score
+    description: Patient's answer to GAD-7 question 2.
+  - name: gad7_3_score
+    description: Patient's answer to GAD-7 question 3.
+  - name: gad7_4_score
+    description: Patient's answer to GAD-7 question 4.
+  - name: gad7_5_score
+    description: Patient's answer to GAD-7 question 5.
+  - name: gad7_6_score
+    description: Patient's answer to GAD-7 question 6.
+  - name: gad7_7_score
+    description: Patient's answer to GAD-7 question 7.
+  - name: gad_overall_score
+    description: Total GAD score calculated from the patient's chatbot answers, indicating anxiety severity.
+  - name: padis1_score
+    description: Patient's answer to PADIS question 1.
+  - name: padis2_score
+    description: Patient's answer to PADIS question 2.
+  - name: padis3_score
+    description: Patient's answer to PADIS question 3.
+  - name: padis4_score
+    description: Patient's answer to PADIS question 4.
+  - name: padis_overall_score
+    description: Total PADIS score calculated from the patient's chatbot answers.
+  - name: pharmacotherapy_similarity_score
+    description: How closely the chatbot/AI-suggested medication plan matches what the doctor actually prescribed, to 2 decimal places.
+  - name: psycoeducation_similarity_score
+    description: How closely the chatbot/AI-generated diagnosis explanation matches the doctor's diagnosis, to 2 decimal places.
+  - name: human_psycoeducation_similarity_score
+    description: A human reviewer's rating of how closely the chatbot/AI diagnosis explanation matches the doctor's diagnosis, to 2 decimal places.
+  - name: human_pharmacotherapy_similarity_score
+    description: A human reviewer's rating of how closely the chatbot/AI medication suggestion matches the doctor's prescription, to 2 decimal places.

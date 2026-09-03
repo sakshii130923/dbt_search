@@ -1,0 +1,44 @@
+version: 2
+models:
+- name: staging_tribal_healtheducation
+  columns:
+  - name: date
+    description: Standardized date of the health education session, formatted as YYYY-MM-DD.
+  - name: health_education_topics
+    description: Topics covered during the health education session.
+  - name: area
+    description: Geographic area where the health education session was conducted.
+  - name: villages_in_karwafa_area
+    description: Number of villages in the Karwafa area involved in the session.
+  - name: villages_in_pendhari_area
+    description: Number of villages in the Pendhari area involved in the session.
+  - name: villages_in_dhanora_area
+    description: Number of villages in the Dhanora area involved in the session.
+  - name: villages_in_rangi_area
+    description: Number of villages in the Rangi area involved in the session.
+  - name: villages_in_murumgao_area
+    description: Number of villages in the Murumgao area involved in the session.
+  - name: session_conducted
+    description: Indicator of whether the health education session was conducted.
+  - name: reason_for_not_conducting_session
+    description: Reason provided for not conducting the session, if applicable.
+  - name: number_of_locations
+    description: Total number of locations where the session was held.
+  - name: location_1_name
+    description: Name of the first location where the session was conducted.
+  - name: location_1_participants
+    description: Number of participants at the first location.
+  - name: location_2_name
+    description: Name of the second location where the session was conducted.
+  - name: location_2_participants
+    description: Number of participants at the second location.
+  - name: location_3_name
+    description: Name of the third location where the session was conducted.
+  - name: location_3_participants
+    description: Number of participants at the third location.
+  - name: location_4_name
+    description: Name of the fourth location where the session was conducted.
+  - name: location_4_participants
+    description: Number of participants at the fourth location.
+  - name: total_number_of_participants
+    description: Total number of participants across all locations.

@@ -1,0 +1,601 @@
+version: 2
+models:
+- name: prod_nirman_questionnaire_responses
+  columns:
+  - name: response_id
+    description: Unique identifier for each participant's response.
+  - name: participant
+    description: Name of the participant providing the response.
+  - name: workshop
+    description: Name of the workshop attended by the participant.
+  - name: workshop_phase
+    description: Phase of the workshop during which the response was collected.
+  - name: batch
+    description: Numeric identifier for the batch of the workshop.
+  - name: workshop_level
+    description: Level of the workshop derived from the batch number.
+  - name: category
+    description: Category of the question being responded to.
+  - name: question_code
+    description: Code representing the specific question.
+  - name: question
+    description: Full text of the question being responded to.
+  - name: short_question
+    description: Abbreviated text of the question.
+  - name: response
+    description: Participant's response to the question, either as a text or integer.
+- name: prod_nirman_questionnaire
+  description: '[NIRMAN | Questionnaire] Granular log capturing survey responses across
+    temporal touchpoints (Pre/Post) to measure psychometric perception changes. Wide-format:
+    one row per participant per workshop phase, each question''s full text as the
+    column name. Covers career preferences (8 cols, RANK 1-8), life criteria (9 cols,
+    RANK 1-9), insecurities (10 cols, scale 1-10), social contribution intent (qualitative),
+    self-assessment / mindset statements (up to 138, scale 1-5), and finance (5 cols).
+    JOIN to Demographics on Participant_ID for profile data. SCALE GUIDE — Career
+    preferences: RANK 1 = most preferred, 8 = least preferred. SCALE GUIDE — Life
+    criteria: RANK 1 = most important, 9 = least important. SCALE GUIDE — Insecurities
+    (1-10): 1 = least insecure, 10 = very insecure. SCALE GUIDE — Statements (1-5): 1 = least applicable,
+    5 = most applicable. Phase mapping: Pre = Before Workshop ; Post = After Workshop.'
+  meta:
+    domain: NIRMAN Social Leadership Program
+    table_role: Questionnaire — subjective / psychometric data
+    join_key: Participant_ID
+    workshop_phase_map:
+      Pre: Initial / Start / Baseline
+      Post: After / Follow-up / Success
+    scale_conventions:
+      career_preferences_ranking:
+        type: ordinal rank
+        range: 1-8
+        columns_example: Government_Service, Own_Business, Social_Work_Fulltime
+        interpretation: 1 = most preferred, 8 = least preferred
+        top_preference: column = 1
+        least_preferred: column = 8
+      life_criteria_ranking:
+        type: ordinal rank
+        range: 1-9
+        columns_example: Fame, Financial_Security, Work_Satisfaction
+        interpretation: 1 = most important, 9 = least important
+        top_criterion: column = 1
+        least_important: column = 9
+      ten_point_insecurities:
+        type: numeric scale
+        range: 1-10
+        question: How insecure are you about this?
+        columns_example: Monetary_Compensation, Social_Acceptability, Response_Of_Parents
+        interpretation: 1 = least insecure, 10 = very insecure
+        highly_insecure: '>= 7'
+        not_insecure: <= 3
+      five_point_statements:
+        type: applicability scale
+        range: 1-5
+        question: How much does this apply to you in the present situation?
+        columns_example: I_Know_What_My_Values_Are
+        interpretation: 1 = least applicable, 5 = most applicable
+        highly_applicable: '>= 4'
+        not_applicable: <= 2
+    longitudinal_completion: GROUP BY Participant_ID HAVING COUNT(DISTINCT Workshop_Phase)
+      = 2
+  columns:
+  - name: participant_id
+    description: Unique identifier for the participant
+    tests:
+    - not_null
+  - name: participant_name
+    description: Participant full name
+  - name: workshop_name
+    description: Name of the workshop
+  - name: batch
+    description: Numeric batch identifier
+  - name: workshop_level
+    description: Sub-level of the batch (0.1, 0.2, or 0.3)
+    tests:
+    - accepted_values:
+        values:
+        - '0.1'
+        - '0.2'
+        - '0.3'
+  - name: workshop_phase
+    description: Phase of the workshop (pre/post)
+    tests:
+    - accepted_values:
+        values:
+        - Pre
+        - Post
+  - name: During My Productive Lifetime I Plan To Engage In Social Contri
+    description: Participant's plan for social contribution engagement
+    tests:
+    - accepted_values:
+        values:
+        - Fulltime as a career
+        - Part time
+        - Volunteering frequently
+        - Occasionally
+        - Monetary contribution
+        - Not yet decided / confused
+  - name: Goverment Service
+    description: 'Career option: Government Service. Career preference rank (1 = most
+      preferred, 8 = least preferred).'
+  - name: Job in Private Industry
+    description: 'Career option: Job in Private Industry. Career preference rank (1
+      = most preferred, 8 = least preferred).'
+  - name: Own Buisness
+    description: 'Career option: Own Business. Career preference rank (1 = most preferred,
+      8 = least preferred).'
+  - name: Social Entrepreneurship/Own NGO
+    description: 'Career option: Social Entrepreneurship / Own NGO. Career preference
+      rank (1 = most preferred, 8 = least preferred).'
+  - name: Working in NGO
+    description: 'Career option: Working in NGO. Career preference rank (1 = most
+      preferred, 8 = least preferred).'
+  - name: Academic (College/University)
+    description: 'Career option: Academic (College/University). Career preference
+      rank (1 = most preferred, 8 = least preferred).'
+  - name: Confused / Not Decided
+    description: 'Career option: Confused / Not Decided. Career preference rank (1
+      = most preferred, 8 = least preferred).'
+  - name: Other
+    description: 'Career option: Other. Career preference rank (1 = most preferred,
+      8 = least preferred).'
+  - name: Geographical Location
+    description: 'Criteria: Geographical Location. Life criteria rank (1 = most important,
+      9 = least important).'
+  - name: Financial Security
+    description: 'Criteria: Financial Security. Life criteria rank (1 = most important,
+      9 = least important).'
+  - name: Work Satisfaction
+    description: 'Criteria: Work Satisfaction. Life criteria rank (1 = most important,
+      9 = least important).'
+  - name: Cause of My work
+    description: 'Criteria: Cause of My Work. Life criteria rank (1 = most important,
+      9 = least important).'
+  - name: Carrer progress/growth
+    description: 'Criteria: Career Progress / Growth. Life criteria rank (1 = most
+      important, 9 = least important).'
+  - name: Work Life Balance
+    description: 'Criteria: Work Life Balance. Life criteria rank (1 = most important,
+      9 = least important).'
+  - name: Financial Prosperity
+    description: 'Criteria: Financial Prosperity. Life criteria rank (1 = most important,
+      9 = least important).'
+  - name: Fame / Recognition
+    description: 'Criteria: Fame / Recognition. Life criteria rank (1 = most important,
+      9 = least important).'
+  - name: Job Security
+    description: 'Criteria: Job Security. Life criteria rank (1 = most important,
+      9 = least important).'
+  - name: Social Acceptability
+    description: 'Insecurity: Social Acceptability. Insecurity score 1–10 (1 = least
+      insecure, 10 = very insecure).'
+  - name: Monetary Compensation
+    description: 'Insecurity: Monetary Compensation. Insecurity score 1–10 (1 = least
+      insecure, 10 = very insecure).'
+  - name: Response of Parents
+    description: 'Insecurity: Response of Parents. Insecurity score 1–10 (1 = least
+      insecure, 10 = very insecure).'
+  - name: Difficulty in finding the sutaible life partner
+    description: 'Insecurity: Difficulty in finding a suitable life partner. Insecurity
+      score 1–10 (1 = least insecure, 10 = very insecure).'
+  - name: Underutilisation of my talent and skills
+    description: 'Insecurity: Underutilisation of talent and skills. Insecurity score
+      1–10 (1 = least insecure, 10 = very insecure).'
+  - name: Less comfertable lifestyle as compared to my usual peers
+    description: 'Insecurity: Less comfortable lifestyle compared to peers. Insecurity
+      score 1–10 (1 = least insecure, 10 = very insecure).'
+  - name: Not being Able to create any visible impact
+    description: 'Insecurity: Not being able to create visible impact. Insecurity
+      score 1–10 (1 = least insecure, 10 = very insecure).'
+  - name: Feeling professionaly leftout
+    description: 'Insecurity: Feeling professionally left out. Insecurity score 1–10
+      (1 = least insecure, 10 = very insecure).'
+  - name: Lack of satisfaction at the end of life
+    description: 'Insecurity: Lack of satisfaction at the end of life. Insecurity
+      score 1–10 (1 = least insecure, 10 = very insecure).'
+  - name: Will my life be less Comfortable than it currently is
+    description: 'Insecurity: Life being less comfortable than currently. Insecurity
+      score 1–10 (1 = least insecure, 10 = very insecure).'
+  - name: I feel happy about myself. I like who I am.
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I have a good understanding about various social issues around me and their
+      severity
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I believe that there is a purpose to my life
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I clearly know which sector I will be working in the long term
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I know what my values are
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I have mentor / facilitators I can talk to regarding myself, my confusions,
+      my future plans
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I can take a specific stand about various social issues around me and in
+      my vicinity
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I have the courage of going against the flow of conventional career options
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I am aware of various ways / approaches of solving social problems
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I do serious readinng to build my moral and political philosophy
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I usually act on my intentions to work towards social issues
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I know what is my 'Swa-dharma'
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I feel secure about my financial future
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I am a person who believes that it's my responsibility to take action for
+      social change
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I have many likeminded friends who also believe in taking action for social
+      change
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I have found a purpose for my life
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I know quite clearly what are my personal drives, motivations for social
+      action
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I find connection between my personal career and social work & expect to
+      contribute accordingly
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I am actively involved in the process of meaning-making for my life
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I have a larger social dream that I can relate to
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I feel that I belong to a diverse and caring community
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I understand the difference between social work activities and the social
+      problem solving approach
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I know that even if I fail, there are people out there to support me
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I find social problem solving intellectually exciting
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I can imagine myself as an impactful social change-maker
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I believe engaging with society is crucial for me to live a meaningful life
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: There are inspiring role models in the social field that I can look up to
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I feel confident about my potential to bring about positive social change
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I understand the difference between happiness and meaning
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I feel I am an emotionally mature adult
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I think I am quite privileged in being who I am today
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I clearly know the differences between my needs and my wants
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: 15 years from now I see myself as an example that will encourage other youth
+      to engage in social action
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I have a guiding life philosophy or moral framework to steer me through
+      life decisions
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I am confident in experimenting with my life
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I get plenty of opportunities to reflect on what is it that I really want
+      to do
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: All things considered, I am satisfied with my life as a whole these days
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I think there are definite rights and wrongs, morals are not relative
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I am comfortable in expressing my feelings
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I believe that engaging in a path of pro-social purpose will have a positive
+      effect on my well-being
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I know what it means to be a flourishing youth
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I understand the scientific definition of 'purpose'
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: Multiple life possibilities of my 20s fill me with excitement
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: Finding my purpose in life is the most urgent priority for me
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I understand the difference between leading a 'happy life' and a 'meaningful
+      life'
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I understand the difference between goal and purpose
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: The more money one earns, the more happy they are
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I understand how to apply 'categorical moral framework' while making important
+      life decisions
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: The process of finding / working on my purpose fills me with excitement
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: The question of 'how much money would I earn in life' does not bother me
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: From those to whom much is given, much is expected
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I value the 'freedom to work on my chosen challenge' more than other opportunities
+      with even higher financial gains
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I understand the importance of purpose and the various advantages associated
+      with it
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: Leading a life of 'social contribution' is one of my deepest quests
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I know how an 'impactful social organisation' functions
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: There are many 'social change makers' that I know of and feel inspired by
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I can visualise possible ways in which I can contribute in the social sector
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I know the difference between my 'minimum threshold income for financial
+      security' and my 'aspirational income'
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I think it's safe to drink alcohol if consumed within limits
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I have identified specific books to read in the coming year
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I plan to proactively engage in actions to reduce my 'carbon footprint'
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I have identified specific actions to work upon in the next 6 months regarding
+      my own flourishing
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I know some specific actions to do in the next 6 months as part of my social
+      contribution
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I have identified few specific actions to pursue my purpose journey
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I know how to become a 'flourishing youth'
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I can visualize at least 5 different career paths for myself
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I productively spend my day in meaningful pursuits
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I am committed to bringing about social change
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I have a mentor(s) with whom I can discuss important life matters
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I have a 'guiding philosophy' to steer me through life
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I can take a stand about various social issues around me
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I know how to understand and analyse a social change intervention
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I feel anxious about fulfilling financial aspirations / ambitions of my
+      life
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I know the building blocks of effective social problem-solving
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I am clear about the process of finding and pursuing my purpose in life
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I know clearly my personal drives and motivations for social action
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I can stay firm on my values even if they are against conventional norms
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I understand different approaches / methods of bringing about social change
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I understand the importance and urgency of identifying my purpose in life
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I have a 'set of values' that help me in making important life decisions
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I have a fair idea about what to do with my life
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I have carefully identified a set of moral resolutions to follow in my daily
+      living
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I can visualize various possible ways in which I can contribute to the social
+      sector
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: All things considered, I am satisfied with my life as a whole
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I have identified specific actions to do in the next 1 year to pursue my
+      purpose journey
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I clearly know which sector I will be working in for most of my professional
+      life
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I have planned specific actions to do in the next 1 year as part of my social
+      change-making journey
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I am empowered to enact my responsibilities as an 'Active Citizen' while
+      dealing with the state
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I have a clear sense of purpose in my life
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I can think of at least 5 different life possibilities based on the decisions
+      I make in my youth
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: There is more to life than continuous consumption of exotic experiences
+      and materialistic pleasures
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I feel anxious about how I will find / pursue my purpose in life
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I am solely responsible for the success I have achieved in my life
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: Large number youth pursuing a career in the social sector is an important
+      need of our today's society
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I know my values / morals and I can take a firm stand about them even in
+      the face of opposition
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I have decided a few moral lifestyle resolutions that I follow
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I have a solid relationship with a mentor with whom I can discuss important
+      life matters
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I know how a life of meaningfulness looks different from a life of pleasure-seeking,
+      & I have the clarity to choose among them
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I am clear about the process of finding / pursuing my purpose in life
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I understand the need, importance and unique roles of the social sector
+      in society
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I exhibit the courage to live authentically with my values and beliefs even
+      if they are against conventional norms
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I understand the difference between 'social work activities' and 'social
+      problem-solving approach'
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I have given a careful thought to what I want to do in my life
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: My choice of what I want to do in my life is not majorly influenced by the
+      norms followed by my peers, seniors, society
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I know the difference between my 'financial needs' and my 'aspirational
+      income'
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I can visualise various possible ways in which I can contribute in the social
+      sector (v2)
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: Although most people wish to join pvt. or govt. sector, I can visualize
+      myself pursuing a career in the social sector
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: The elevation I feel when I see or read about other people devoting their
+      lives for a social mission, strongly motivates me to act for social change
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I can imagine myself as impactful social changemaker
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: My self actualisation is intemently linked with the others in the society
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I feel I am an emotionally matured adult
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I don't have a lear understanding between my needs and my wants
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: My undrstanding of the broader social economic issues is very poor
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I don't get opportunity to reflect on what it is that I really want to do
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I think morals are relative, there are no definite rights and wrongs for
+      everybody
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I doubt that engaging in a path of social purpose might affect my well-being
+      adversely
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: Monthly income at age 25
+    description: 'Finance: Expected monthly income at age 25 (INR). Monthly income
+      expectation in INR as stated by the participant.'
+  - name: Monthly income at age 30
+    description: 'Finance: Expected monthly income at age 30 (INR). Monthly income
+      expectation in INR as stated by the participant.'
+  - name: Monthly income as per Financial sheet
+    description: 'Finance: Monthly income figure from the financial planning sheet
+      (INR). Monthly income expectation in INR as stated by the participant.'
+  - name: Monthly income Divided by 2
+    description: 'Finance: Half of the financial-sheet income figure (INR). Monthly
+      income expectation in INR as stated by the participant.'
+  - name: Financially independent in next N years
+    description: 'Finance: Number of years within which the participant expects to
+      be financially independent.'

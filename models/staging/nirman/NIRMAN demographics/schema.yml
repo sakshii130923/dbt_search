@@ -1,0 +1,71 @@
+version: 2
+models:
+- name: staging_nirman_demographics
+  columns:
+  - name: participant_id
+    description: Unique identifier for each participant.
+  - name: name
+    description: Full name of the participant.
+  - name: gender
+    description: Gender of the participant.
+  - name: batch
+    description: Batch identifier for the participant's group.
+  - name: current_age
+    description: Current age of the participant.
+  - name: age_at_workshop
+    description: Age of the participant at the time of the workshop.
+  - name: workshop
+    description: Details of the workshop attended by the participant.
+  - name: workshop_type
+    description: Type of workshop attended by the participant.
+  - name: workshop_month_year
+    description: Month and year when the workshop was held.
+  - name: workshop_month
+    description: Month when the workshop was held.
+  - name: workshop_month_num
+    description: Numeric representation of the month when the workshop was held.
+  - name: workshop_fy
+    description: Fiscal year during which the workshop was held.
+  - name: workshops_attended
+    description: Number of workshops attended by the participant.
+  - name: educational_stream
+    description: Educational stream or field of study of the participant.
+  - name: educational_stream_1
+    description: Primary educational stream of the participant.
+  - name: current_status_of_work
+    description: Current employment or work status of the participant.
+  - name: person_years_social_action
+    description: Number of years the participant has been involved in social action
+      as of the latest March 31st.
+  - name: education_status
+    description: Current educational status of the participant.
+  - name: native_state
+    description: Normalized state of origin for the participant.
+  - name: native_district
+    description: Normalized district of origin for the participant.
+  - name: native_tehsiltown
+    description: Normalized tehsil or town of origin for the participant.
+  - name: raw_native_state
+    description: Raw state data as provided in the source.
+  - name: raw_native_district
+    description: Raw district data as provided in the source.
+  - name: raw_native_tehsil
+    description: Raw tehsil data as provided in the source.
+  - name: state_match_status
+    description: Status of state normalization (OK, Unmatched, International).
+  - name: district_match_status
+    description: Status of district normalization (OK, Unmatched).
+  - name: tehsil_match_method
+    description: Method used for tehsil normalization (Resolved, Null Input, Skipped-No-District).
+  - name: point_2_workshop_name
+    description: Name of the second workshop attended by the participant.
+  - name: point_2_workshop_invited
+    description: Invitation status for the second workshop.
+  - name: point_2_workshop_attended
+    description: Attendance status for the second workshop.
+  - name: point_3_workshop_name
+    description: Name of the third workshop attended by the participant.
+  - name: point_3_workshop_invited
+    description: Invitation status for the third workshop.
+  - name: point_3_workshop_attended
+    description: Attendance status for the third workshop.

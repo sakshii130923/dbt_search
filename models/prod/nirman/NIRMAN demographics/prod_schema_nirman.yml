@@ -1,0 +1,163 @@
+version: 2
+models:
+- name: prod_nirman_demographics
+  description: '[NIRMAN | Demographics] Primary master registry for unique participant
+    baseline profiles. Renames all columns to human-readable quoted labels suitable
+    for Metabase. Contains objective profile data: Gender, Age, Educational_Stream,
+    Current_Status_Of_Work, cohort context (Batch, Workshop_Type, Workshop_Financial_Year),
+    geographic data (Native_State, Native_District, Native_Tehsil_Town), and longitudinal tracking
+    (Person_Years_Social_Action, Point 2 and 3 workshop invitation and attendance flags).
+    JOIN to Questionnaire on Participant_ID for psychometric data. 
+    Default filter: WHERE Workshop_Type <> ''Krutee NIRMAN''.
+  meta:
+    table_role: Demographics — objective profile data
+    join_key: Participant_ID
+    default_filter: Workshop_Type <> 'Krutee NIRMAN'
+    social_experience_filter: Current_Status_Of_Work IN ('Social Impact Work', 'Previously
+      SIW', 'Educational Break')
+  columns:
+  - name: Participant ID
+    description: Unique identifier for each NIRMAN participant
+    tests:
+    - not_null
+    - unique
+  - name: Name
+    description: Participant full name
+  - name: Gender
+    description: Participant gender (uppercased)
+    tests:
+    - accepted_values:
+        values:
+        - FEMALE
+        - MALE
+  - name: Batch
+    description: Numeric batch identifier (e.g. 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+  - name: Current Age
+    description: Participant's current age
+  - name: Age at Workshop
+    description: Participant's age when they attended the workshop
+  - name: Workshop
+    description: Workshop identifier or name (e.g.A, B, C, D, E, F, G, H)
+  - name: Workshop Type
+    description: Workshop type (e.g. Nirman, Krutee Nirman)
+    tests:
+    - accepted_values:
+        values:
+        - NIRMAN
+        - Krutee NIRMAN
+  - name: Workshop Month and Year
+    description: Month and year when the workshop was conducted
+  - name: Workshop Month
+    description: Calendar month of the workshop
+  - name: Workshop Month Num
+    description: Numeric month of the workshop (1–12)
+  - name: Workshop Financial Year
+    description: Financial year of the workshop
+    tests:
+    - accepted_values:
+        values:
+        - FY 2019-20
+        - FY 2021-22
+        - FY 2022-23
+        - FY 2023-24
+        - FY 2024-25
+        - FY 2025-26
+  - name: Workshops Attended
+    description: Number of workshops attended by the participant (e.g. 0,1, 2, 3)
+  - name: Educational Stream
+    description: Normalized educational stream
+    tests:
+    - accepted_values:
+        values:
+        - Arts
+        - Commerce
+        - Engineering
+        - HSC
+        - Journalism / Media / Film-Making
+        - Law
+        - Management
+        - Medical
+        - Medical / Public Health
+        - Science
+        - Social Work
+  - name: Educational Stream 1
+    description: Broad educational stream category
+    tests:
+    - accepted_values:
+        values:
+        - Arts/Commerce/Science/Pharmacy
+        - Engineering
+        - Medical
+        - Other
+  - name: Current Status of Work
+    description: Current employment or work status
+    tests:
+    - accepted_values:
+        values:
+        - Different Trajectory
+        - Educational Break
+        - Not Sure
+        - Other Work
+        - Previously SIW
+        - Social Impact Work
+        - Student
+  - name: Person Years of Social Action as on 31st Mar'25
+    description: Years of social action experience (rounded to 1 decimal)
+  - name: Education_Status
+    description: Education level classification
+    tests:
+    - accepted_values:
+        values:
+        - Graduate
+        - Not Known
+        - Student
+  - name: Native State
+    description: Normalised native state
+    tests:
+    - accepted_values:
+        values:
+        - International
+        - Karnataka
+        - Kerala
+        - etc
+  - name: Native District
+    description: Normalised native district
+  - name: Native Tehsil/Town
+    description: Normalised native tehsil/town
+  - name: Raw Native State
+    description: Raw native state from source (for audit)
+  - name: Raw Native District
+    description: Raw native district from source (for audit)
+  - name: Raw Native Tehsil
+    description: Raw native tehsil from source (for audit)
+  - name: State Match Status
+    description: 'Location QA flag: OK | Unmatched | International'
+  - name: District Match Status
+    description: 'Location QA flag: OK | Unmatched'
+  - name: Tehsil Match Method
+    description: 'Location QA flag: Resolved | Null Input | Skipped-No-District'
+  - name: Point 2 Workshop Name
+    description: Name of the Point 2 follow-up workshop
+  - name: Point 2 Workshop Invited
+    description: Whether participant was invited to Point 2 workshop
+    tests:
+    - accepted_values:
+        values:
+        - Y
+        - N
+        - '?'
+  - name: Point 2 Workshop Attended
+    description: Whether participant attended Point 2 workshop
+  - name: Point 3 Workshop Name
+    description: Name of the Point 3 follow-up workshop
+  - name: Point 3 Workshop Invited
+    description: Whether participant was invited to Point 3 workshop
+    tests:
+    - accepted_values:
+        values:
+        - Same Batch
+        - Invited Later
+        - Consider Later
+        - 'No'
+  - name: Point 3 Workshop Attended
+    description: Whether participant attended Point 3 workshop

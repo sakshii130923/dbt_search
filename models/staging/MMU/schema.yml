@@ -1,0 +1,105 @@
+version: 2
+models:
+- name: staging_mmu_1
+  columns:
+  - name: serial_no
+    description: Unique serial number for each patient record.
+  - name: patient_unique_id
+    description: Unique identifier assigned to each patient.
+  - name: patient_name
+    description: Full name of the patient, trimmed of any leading or trailing spaces.
+  - name: gender
+    description: Gender of the patient, standardized to lowercase.
+  - name: age_years
+    description: Age of the patient in years, derived from available age data.
+  - name: age_group
+    description: Age group category based on the patient's age in years.
+  - name: area
+    description: Name of the area where the patient resides, trimmed of any leading
+      or trailing spaces.
+  - name: village
+    description: Name of the village where the patient resides, trimmed of any leading
+      or trailing spaces.
+  - name: diagnosis1
+    description: Primary diagnosis for the patient, cleaned and standardized.
+  - name: diagnosis2
+    description: Secondary diagnosis for the patient, cleaned and standardized.
+  - name: diagnosis3
+    description: Tertiary diagnosis for the patient, cleaned and standardized.
+  - name: diagnosis4
+    description: Quaternary diagnosis for the patient, cleaned and standardized.
+  - name: diagnosis5
+    description: Quinary diagnosis for the patient, cleaned and standardized.
+  - name: is_referred
+    description: Flag indicating if the patient was referred, true if referred.
+  - name: is_newly_diagnosed
+    description: Flag indicating if the patient was newly diagnosed, true if newly
+      diagnosed.
+  - name: is_followup
+    description: Flag indicating if the visit was a follow-up, true if follow-up.
+  - name: visit_date
+    description: Date of the patient visit in YYYY-MM-DD format.
+  - name: visit_week
+    description: Week number of the year when the visit occurred.
+  - name: visit_month
+    description: Month of the year when the visit occurred.
+  - name: visit_year
+    description: Year when the visit occurred.
+  - name: submitted_by
+    description: Name of the person who submitted the patient data.
+  - name: doctor_name
+    description: Name of the doctor who attended to the patient.
+  - name: source_system
+    description: Source system from which the patient data was obtained.
+  - name: dbt_load_timestamp
+    description: Timestamp indicating when the data was loaded into the dbt model.
+- name: staging_mmu_2
+  columns:
+  - name: serial_no
+    description: Unique serial number for each patient record.
+  - name: patient_unique_id
+    description: Unique identifier for the patient across all records.
+  - name: patient_name
+    description: Full name of the patient, trimmed of leading and trailing spaces.
+  - name: gender
+    description: Gender of the patient, standardized to lowercase.
+  - name: age_years
+    description: Age of the patient in years, calculated from available age data.
+  - name: age_group
+    description: Age group category of the patient based on age_years.
+  - name: area
+    description: Name of the area where the patient resides, trimmed of spaces.
+  - name: village
+    description: Name of the village where the patient resides, trimmed of spaces.
+  - name: diagnosis1
+    description: Primary diagnosis for the patient, cleaned and standardized.
+  - name: diagnosis2
+    description: Secondary diagnosis for the patient, cleaned and standardized.
+  - name: diagnosis3
+    description: Tertiary diagnosis for the patient, cleaned and standardized.
+  - name: diagnosis4
+    description: Quaternary diagnosis for the patient, cleaned and standardized.
+  - name: diagnosis5
+    description: Quinary diagnosis for the patient, cleaned and standardized.
+  - name: is_referred
+    description: Boolean flag indicating if the patient was referred.
+  - name: is_newly_diagnosed
+    description: Boolean flag indicating if the patient was newly diagnosed.
+  - name: is_followup
+    description: Boolean flag indicating if the visit was a follow-up.
+  - name: visit_date
+    description: Date of the patient visit in YYYY-MM-DD format.
+  - name: visit_week
+    description: Week number of the patient visit.
+  - name: visit_month
+    description: Month of the patient visit.
+  - name: visit_year
+    description: Year of the patient visit.
+  - name: submitted_by
+    description: Name of the person who submitted the patient data.
+  - name: doctor_name
+    description: Name of the doctor who attended to the patient.
+  - name: source_system
+    description: Source system from which the data was extracted.
+  - name: dbt_load_timestamp
+    description: Timestamp when the data was loaded into the dbt model.

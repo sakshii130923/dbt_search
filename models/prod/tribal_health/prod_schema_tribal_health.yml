@@ -1,0 +1,111 @@
+version: 2
+models:
+- name: prod_tribal_healtheducation
+  description: 'Production-ready tribal health education table. Applies village name
+    normalisation (strips trailing punctuation, collapses spaces, maps known spelling
+    variants to canonical forms) via the normalised_village_tribal macro. Adds a combined
+    villages column, per-topic boolean flags via the topic_flags macro, and casts
+    numeric fields to integer. Ordered by date descending.
+
+    '
+  columns:
+  - name: date
+    description: Date of the health education session
+    tests:
+    - not_null
+  - name: health_education_topics
+    description: Raw health education topics string for the session
+  - name: area
+    description: Area where the session was conducted
+  - name: villages_in_karwafa_area
+    description: Normalised village names in Karwafa area
+  - name: villages_in_pendhari_area
+    description: Normalised village names in Pendhari area
+  - name: villages_in_dhanora_area
+    description: Normalised village names in Dhanora area
+  - name: villages_in_rangi_area
+    description: Normalised village names in Rangi area
+  - name: villages_in_murumgao_area
+    description: Normalised village names in Murumgao area
+  - name: villages
+    description: All normalised village names across all areas, comma-separated
+  - name: session_conducted
+    description: Whether the health education session was conducted (Yes/No)
+  - name: reason_for_not_conducting_session
+    description: Reason provided if the session was not conducted
+  - name: number_of_locations
+    description: Number of locations where health education was conducted (integer)
+  - name: location_1_name
+    description: Name of the first location
+  - name: location_1_participants
+    description: Number of participants at location 1 (integer)
+  - name: location_2_name
+    description: Name of the second location
+  - name: location_2_participants
+    description: Number of participants at location 2 (integer)
+  - name: location_3_name
+    description: Name of the third location
+  - name: location_3_participants
+    description: Number of participants at location 3 (integer)
+  - name: location_4_name
+    description: Name of the fourth location
+  - name: location_4_participants
+    description: Number of participants at location 4 (integer)
+  - name: total_number_of_participants
+    description: Total participants across all locations (integer)
+- name: prod_tribal_healtheducation_by_topic
+  description: 'Long-format production table with one row per topic per session. Built
+    by unpivoting the boolean topic flags from prod_tribal_healtheducation using the
+    get_health_education_topics macro. Row count equals sessions × topics covered.
+    Use this model in Metabase to filter by ''topic'' as a plain text field. To add
+    a new topic, only edit macros/health_education_topics.sql.
+
+    '
+  columns:
+  - name: date
+    description: Date of the health education session
+    tests:
+    - not_null
+  - name: area
+    description: Area where the session was conducted
+  - name: villages
+    description: All normalised village names for the session, comma-separated
+  - name: villages_in_karwafa_area
+    description: Normalised village names in Karwafa area
+  - name: villages_in_pendhari_area
+    description: Normalised village names in Pendhari area
+  - name: villages_in_dhanora_area
+    description: Normalised village names in Dhanora area
+  - name: villages_in_rangi_area
+    description: Normalised village names in Rangi area
+  - name: villages_in_murumgao_area
+    description: Normalised village names in Murumgao area
+  - name: session_conducted
+    description: Whether the session was conducted (Yes/No)
+  - name: reason_for_not_conducting_session
+    description: Reason if the session was not conducted
+  - name: number_of_locations
+    description: Number of locations for the session
+  - name: location_1_name
+    description: Name of the first location
+  - name: location_1_participants
+    description: Participants at location 1
+  - name: location_2_name
+    description: Name of the second location
+  - name: location_2_participants
+    description: Participants at location 2
+  - name: location_3_name
+    description: Name of the third location
+  - name: location_3_participants
+    description: Participants at location 3
+  - name: location_4_name
+    description: Name of the fourth location
+  - name: location_4_participants
+    description: Participants at location 4
+  - name: total_number_of_participants
+    description: Total participants across all locations
+  - name: topic
+    description: Health education topic label for this row (one row per topic per
+      session)
+    tests:
+    - not_null

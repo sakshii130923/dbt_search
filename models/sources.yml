@@ -541,33 +541,31 @@ sources:
             description: A human reviewer's rating of how closely the chatbot/AI diagnosis explanation matches the doctor's diagnosis, to 2 decimal places.
   - name: human_pharmacotherapy_similarity_score
             description: A human reviewer's rating of how closely the chatbot/AI medication suggestion matches the doctor's prescription, to 2 decimal places.
-- name: referral_management
-  description: Referral management chatbot data from Frappe via Airbyte. Captures patient referrals raised by SEARCH field staff to hospital/OPD teams.
-  schema: staging_referral_management 
-  tables:
-  - name: tabPatient_Referral
-    identifier: "tabPatient_Referral"
-    description: Raw referral records from the chatbot — one row per referral raised by a field staff member (Supervisor/ASHA/MMU/MHD counsellor) for a patient needing hospital/OPD care
-    columns:
-  - name: reference_number
-    description: Unique referral code issued by the chatbot to the field staff member
-  - name: referral_date
-    description: Date the referral was raised
-  - name: phc
-    description: PHC / village catchment area the field staff member was operating in
-  - name: referrer_department
-    description: Team/department of the field staff member who raised the referral (e.g. MMU, MHD)
-  - name: referrer_name
-    description: Name of the field staff member who raised the referral
-  - name: patient_name
-    description: Name of the patient being referred
-  - name: patient_age
-    description: Age of the patient as entered in source
-  - name: patient_gender
-    description: Gender of the patient as entered in source
-  - name: opd_departments
-    description: Hospital OPD department the patient was referred to
-  - name: modified
-    description: Record last modified timestamp, used for de-duplication
-  - name: patient_taluka
-    description: Taluka (sub-district) of the patient as entered in source
+  - name: referral_management
+    description: Referral management chatbot data from Frappe via Airbyte. Captures patient referrals raised by SEARCH field staff to hospital/OPD teams.
+    schema: staging_referral_management 
+    tables:
+      - name: tabPatient_Referral
+        identifier: "tabPatient_Referral"
+        description: Raw referral records from the chatbot — one row per referral raised by a field staff member (Supervisor/ASHA/MMU/MHD counsellor) for a patient needing hospital/OPD care
+        columns:
+          - name: reference_number
+            description: Unique referral code issued by the chatbot to the field staff member
+          - name: referral_date
+            description: Date the referral was raised
+          - name: phc
+            description: PHC / village catchment area the field staff member was operating in
+          - name: referrer_department
+            description: Team/department of the field staff member who raised the referral (e.g. MMU, MHD)
+          - name: referrer_name
+            description: Name of the field staff member who raised the referral
+          - name: patient_name
+            description: Name of the patient being referred
+          - name: patient_age
+            description: Age of the patient as entered in source
+          - name: patient_gender
+            description: Gender of the patient as entered in source
+          - name: opd_departments
+            description: Hospital OPD department the patient was referred to
+          - name: modified
+            description: Record last modified timestamp, used for de-duplication

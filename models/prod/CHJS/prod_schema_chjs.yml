@@ -1,0 +1,70 @@
+version: 2
+models:
+- name: prod_chjs_patients
+  description: 'Production-ready CHJS patient table with all coded fields decoded
+    to human-readable descriptions via joins to seeds_chjs_codes. Combines new and
+    follow-up patient visits. Coded fields fall back to the raw code value if no matching
+    description is found.
+
+    '
+  columns:
+  - name: registration_no
+    description: Unique patient registration number
+    tests:
+    - not_null
+  - name: patient_name
+    description: Patient full name
+  - name: age
+    description: Patient age in years
+  - name: gender
+    description: Decoded gender label (Male / Female)
+  - name: visit_date
+    description: Date of patient visit
+    tests:
+    - not_null
+  - name: visit_month
+    description: Full month name of the visit
+  - name: visit_year
+    description: Four-digit year of the visit
+  - name: patient_type
+    description: 'Visit classification: New or Follow-up'
+  - name: type
+    description: 'OPD type: REGULAR (OPD), TELE, or SPECIALIST'
+  - name: speciality
+    description: Decoded medical speciality (e.g. ORTHOPEDICS, SPINE)
+  - name: area_affected
+    description: Decoded body area affected (e.g. SHOULDER, KNEE)
+  - name: n_diagnosis_1
+    description: Decoded primary diagnosis
+  - name: n_advice_1
+    description: Decoded primary advice
+  - name: n_diagnosis_2
+    description: Decoded secondary diagnosis (null for follow-up patients)
+  - name: n_advice_2
+    description: Decoded secondary advice (null for follow-up patients)
+  - name: n_diagnosis_3
+    description: Decoded tertiary diagnosis (null for follow-up patients)
+  - name: n_advice_3
+    description: Decoded tertiary advice (null for follow-up patients)
+  - name: red_flag
+    description: Decoded red flag indicator (Yes / No)
+  - name: red_flag_description
+    description: Normalized free-text red flag description
+  - name: mri_suggested
+    description: Decoded MRI suggestion (Yes / No)
+  - name: mri_referred
+    description: Decoded MRI referral destination
+  - name: xray_mri_already_done
+    description: Decoded previous X-ray/MRI status (Yes / No)
+  - name: patient_return_with_mri
+    description: Decoded whether follow-up patient returned with MRI (Yes / No)
+  - name: other_diagnosis_1
+    description: First other diagnosis (free text, normalized)
+  - name: other_diagnosis_2
+    description: Second other diagnosis (free text, normalized)
+  - name: other_diagnosis_3
+    description: Third other diagnosis (free text, normalized)
+  - name: other_daignosis
+    description: Other diagnosis for follow-up patients (source typo preserved)
+  - name: opd_session
+    description: Formatted OPD session label (DD/MM/YYYY-Type)
