@@ -459,88 +459,88 @@ sources:
     identifier: "tabMH_Chatbot_Consultation_Glific"
     description: Patient mental health chatbot screening sessions including PHQ, GAD, and PADIS scores with AI and doctor diagnosis outputs
     columns:
-  - name: Patient Identification Number
-    description: Unique patient identification number from source
-  - name: Creation
-    description: Record creation timestamp
-  - name: Modified
-    description: Record last modified timestamp
-  - name: Counselor Name
-    description: Name of the counselor
-  - name: Patient Name
-    description: Full name of the patient
-  - name: Patient Gender
-    description: Gender of the patient as entered in source
-  - name: Patient Age
-    description: Age of the patient as entered in source
-  - name: Patient Taluka
-    description: Taluka of the patient
-  - name: Patient District
-    description: District of the patient
-  - name: phq2_1
-    description: Patient's answer to PHQ-2 question 1, used as a quick first-pass depression screen.
-  - name: phq2_2
-    description: Patient's answer to PHQ-2 question 2, used as a quick first-pass depression screen.
-  - name: phq9_1_score
-    description: Patient's answer to PHQ-9 question 1 (full depression screening, asked if PHQ-2 flags a concern).
-  - name: phq9_2_score
-    description: Patient's answer to PHQ-9 question 2.
-  - name: phq9_3_score
-    description: Patient's answer to PHQ-9 question 3.
-  - name: phq9_4_score
-    description: Patient's answer to PHQ-9 question 4.
-  - name: phq9_5_score
-    description: Patient's answer to PHQ-9 question 5.
-  - name: phq9_7_score
-    description: Patient's answer to PHQ-9 question 7.
-  - name: phq9_8_score
-    description: Patient's answer to PHQ-9 question 8.
-  - name: phq9_9_score
-    description: Patient's answer to PHQ-9 question 9.
-  - name: phq9_10_score
-    description: Patient's answer to PHQ-9 question 10.
-  - name: phq9_11_score
-    description: Patient's answer to PHQ-9 question 11.
-  - name: phq_overall_score
-    description: Total PHQ score calculated from the patient's chatbot answers, indicating depression severity.
-  - name: gad2_1_score
-    description: Patient's answer to GAD-2 question 1, used as a quick first-pass anxiety screen.
-  - name: gad2_2_score
-    description: Patient's answer to GAD-2 question 2, used as a quick first-pass anxiety screen.
-  - name: gad7_1_score
-    description: Patient's answer to GAD-7 question 1 (full anxiety screening, asked if GAD-2 flags a concern).
-  - name: gad7_2_score
-    description: Patient's answer to GAD-7 question 2.
-  - name: gad7_3_score
-    description: Patient's answer to GAD-7 question 3.
-  - name: gad7_4_score
-    description: Patient's answer to GAD-7 question 4.
-  - name: gad7_5_score
-    description: Patient's answer to GAD-7 question 5.
-  - name: gad7_6_score
-    description: Patient's answer to GAD-7 question 6.
-  - name: gad7_7_score
-    description: Patient's answer to GAD-7 question 7.
-  - name: gad_overall_score
-    description: Total GAD score calculated from the patient's chatbot answers, indicating anxiety severity.
-  - name: padis1_score
-    description: Patient's answer to PADIS question 1, used to screen for panic disorder symptoms.
-  - name: padis2_score
-    description: Patient's answer to PADIS question 2.
-  - name: padis3_score
-    description: Patient's answer to PADIS question 3.
-  - name: padis4_score
-    description: Patient's answer to PADIS question 4.
-  - name: padis_overall_score
-    description: Total PADIS score calculated from the patient's chatbot answers, indicating panic disorder severity.
-  - name: pharmacotherapy_similarity_score
-    description: How closely the chatbot/AI-suggested medication plan matches what the doctor actually prescribed, to 2 decimal places.
-  - name: psycoeducation_similarity_score
-    description: How closely the chatbot/AI-generated diagnosis explanation matches the doctor's diagnosis, to 2 decimal places.
-  - name: human_psycoeducation_similarity_score
-    description: A human reviewer's rating of how closely the chatbot/AI diagnosis explanation matches the doctor's diagnosis, to 2 decimal places.
-  - name: human_pharmacotherapy_similarity_score
-    description: A human reviewer's rating of how closely the chatbot/AI medication suggestion matches the doctor's prescription, to 2 decimal places.
+    - name: Patient Identification Number
+      description: Unique patient identification number from source
+    - name: Creation
+      description: Record creation timestamp
+    - name: Modified
+      description: Record last modified timestamp
+    - name: Counselor Name
+      description: Name of the counselor
+    - name: Patient Name
+      description: Full name of the patient
+    - name: Patient Gender
+      description: Gender of the patient as entered in source
+    - name: Patient Age
+      description: Age of the patient as entered in source
+    - name: Patient Taluka
+      description: Taluka of the patient
+    - name: Patient District
+      description: District of the patient
+    - name: phq2_1
+      description: Patient's answer to PHQ-2 question 1, used as a quick first-pass depression screen.
+    - name: phq2_2
+      description: Patient's answer to PHQ-2 question 2, used as a quick first-pass depression screen.
+    - name: phq9_1_score
+      description: Patient's answer to PHQ-9 question 1 (full depression screening, asked if PHQ-2 flags a concern).
+    - name: phq9_2_score
+      description: Patient's answer to PHQ-9 question 2.
+    - name: phq9_3_score
+      description: Patient's answer to PHQ-9 question 3.
+    - name: phq9_4_score
+      description: Patient's answer to PHQ-9 question 4.
+    - name: phq9_5_score
+      description: Patient's answer to PHQ-9 question 5.
+    - name: phq9_7_score
+      description: Patient's answer to PHQ-9 question 7.
+    - name: phq9_8_score
+      description: Patient's answer to PHQ-9 question 8.
+    - name: phq9_9_score
+      description: Patient's answer to PHQ-9 question 9.
+    - name: phq9_10_score
+      description: Patient's answer to PHQ-9 question 10.
+    - name: phq9_11_score
+      description: Patient's answer to PHQ-9 question 11.
+    - name: phq_overall_score
+      description: Total PHQ score calculated from the patient's chatbot answers, indicating depression severity.
+    - name: gad2_1_score
+      description: Patient's answer to GAD-2 question 1, used as a quick first-pass anxiety screen.
+    - name: gad2_2_score
+      description: Patient's answer to GAD-2 question 2, used as a quick first-pass anxiety screen.
+    - name: gad7_1_score
+      description: Patient's answer to GAD-7 question 1 (full anxiety screening, asked if GAD-2 flags a concern).
+    - name: gad7_2_score
+      description: Patient's answer to GAD-7 question 2.
+    - name: gad7_3_score
+      description: Patient's answer to GAD-7 question 3.
+    - name: gad7_4_score
+      description: Patient's answer to GAD-7 question 4.
+    - name: gad7_5_score
+      description: Patient's answer to GAD-7 question 5.
+    - name: gad7_6_score
+      description: Patient's answer to GAD-7 question 6.
+    - name: gad7_7_score
+      description: Patient's answer to GAD-7 question 7.
+    - name: gad_overall_score
+      description: Total GAD score calculated from the patient's chatbot answers, indicating anxiety severity.
+    - name: padis1_score
+      description: Patient's answer to PADIS question 1, used to screen for panic disorder symptoms.
+    - name: padis2_score
+      description: Patient's answer to PADIS question 2.
+    - name: padis3_score
+      description: Patient's answer to PADIS question 3.
+    - name: padis4_score
+      description: Patient's answer to PADIS question 4.
+    - name: padis_overall_score
+      description: Total PADIS score calculated from the patient's chatbot answers, indicating panic disorder severity.
+    - name: pharmacotherapy_similarity_score
+      description: How closely the chatbot/AI-suggested medication plan matches what the doctor actually prescribed, to 2 decimal places.
+    - name: psycoeducation_similarity_score
+      description: How closely the chatbot/AI-generated diagnosis explanation matches the doctor's diagnosis, to 2 decimal places.
+    - name: human_psycoeducation_similarity_score
+      description: A human reviewer's rating of how closely the chatbot/AI diagnosis explanation matches the doctor's diagnosis, to 2 decimal places.
+    - name: human_pharmacotherapy_similarity_score
+      description: A human reviewer's rating of how closely the chatbot/AI medication suggestion matches the doctor's prescription, to 2 decimal places.
 - name: referral_management
   description: Referral management chatbot data from Frappe via Airbyte. Captures patient referrals raised by SEARCH field staff to hospital/OPD teams.
   schema: staging_referral_management 
@@ -549,23 +549,23 @@ sources:
     identifier: "tabPatient_Referral"
     description: Raw referral records from the chatbot — one row per referral raised by a field staff member (Supervisor/ASHA/MMU/MHD counsellor) for a patient needing hospital/OPD care
     columns:
-  - name: reference_number
-    description: Unique referral code issued by the chatbot to the field staff member
-  - name: referral_date
-    description: Date the referral was raised
-  - name: phc
-    description: PHC / village catchment area the field staff member was operating in
-  - name: referrer_department
-    description: Team/department of the field staff member who raised the referral (e.g. MMU, MHD)
-  - name: referrer_name
-    description: Name of the field staff member who raised the referral
-  - name: patient_name
-    description: Name of the patient being referred
-  - name: patient_age
-    description: Age of the patient as entered in source
-  - name: patient_gender
-    description: Gender of the patient as entered in source
-  - name: opd_departments
-    description: Hospital OPD department the patient was referred to
-  - name: modified
-    description: Record last modified timestamp, used for de-duplication
+    - name: reference_number
+      description: Unique referral code issued by the chatbot to the field staff member
+    - name: referral_date
+      description: Date the referral was raised
+    - name: phc
+      description: PHC / village catchment area the field staff member was operating in
+    - name: referrer_department
+      description: Team/department of the field staff member who raised the referral (e.g. MMU, MHD)
+    - name: referrer_name
+      description: Name of the field staff member who raised the referral
+    - name: patient_name
+      description: Name of the patient being referred
+    - name: patient_age
+      description: Age of the patient as entered in source
+    - name: patient_gender
+      description: Gender of the patient as entered in source
+    - name: opd_departments
+      description: Hospital OPD department the patient was referred to
+    - name: modified
+      description: Record last modified timestamp, used for de-duplication
