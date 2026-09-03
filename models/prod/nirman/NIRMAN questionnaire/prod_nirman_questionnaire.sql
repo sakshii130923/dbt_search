@@ -191,6 +191,17 @@ with base_data as (
         max(case when question_code = 'question_166' then coalesce(cast(response_int as text), response_text) end) as "I believe my purpose is to make a meaningful difference in the society",
         max(case when question_code = 'question_167' then coalesce(cast(response_int as text), response_text) end) as "I am committed to be part of a youth community working for social change",
         max(case when question_code = 'question_168' then coalesce(cast(response_int as text), response_text) end) as "In the existing representative democracy, I can enact my responsibilities as an 'Active Citizen'",
+        max(case when question_code = 'question_169' then coalesce(cast(response_int as text), response_text) end) as "The safety and security needs of life occupy a major part of my thoughts and mental world",
+        -- Batch 17 questions (q170-q178)
+        max(case when question_code = 'question_170' then coalesce(cast(response_int as text), response_text) end) as "My approach to leading life is to complete a bucket list to maximise my happiness",
+        max(case when question_code = 'question_171' then coalesce(cast(response_int as text), response_text) end) as "I usually spend my every day intentionally, engaging in activities linked to my long-term purpose",
+        max(case when question_code = 'question_172' then coalesce(cast(response_int as text), response_text) end) as "I feel an urgency to act on the issue of climate change",
+        max(case when question_code = 'question_173' then coalesce(cast(response_int as text), response_text) end) as "While contemplating about social change, I often feel lonely",
+        max(case when question_code = 'question_174' then coalesce(cast(response_int as text), response_text) end) as "Income inequality in the world is justified as talented people are bound to earn more",
+        max(case when question_code = 'question_175' then coalesce(cast(response_int as text), response_text) end) as "I am proactively taking steps to become an independent & responsible adult",
+        max(case when question_code = 'question_176' then coalesce(cast(response_int as text), response_text) end) as "I carefully consider my needs before making any purchases",
+        max(case when question_code = 'question_177' then coalesce(cast(response_int as text), response_text) end) as "I realize the importance of having mentors (non-family elders) whom I can ask for continued growth input.",
+        max(case when question_code = 'question_178' then coalesce(cast(response_int as text), response_text) end) as "I am actively cultivating relationship with mentor(s)",
         -- Finance questions (5)
         max(case when question_code = 'finance_1' then coalesce(cast(response_int as text), response_text) end) as "Monthly income at age 25",
         max(case when question_code = 'finance_2' then coalesce(cast(response_int as text), response_text) end) as "Monthly income at age 30",

@@ -654,6 +654,71 @@ models:
       as an 'Active Citizen'
     description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
       applicable).
+  - name: I can take a stand about various social issues around me
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I know clearly my personal drives and motivations for social action
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I can visualize various possible ways in which I can contribute to the social
+      sector
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: All things considered, I am satisfied with my life as a whole
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I have a solid relationship with a mentor with whom I can discuss important
+      life matters
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I am clear about the process of finding / pursuing my purpose in life
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I understand the difference between 'social work activities' and 'social
+      problem-solving approach'
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I can visualise various possible ways in which I can contribute in the social
+      sector (v2)
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I can imagine myself as impactful social changemaker
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I feel I am an emotionally matured adult
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: My approach to leading life is to complete a bucket list to maximise my
+      happiness
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I usually spend my every day intentionally, engaging in activities linked
+      to my long-term purpose
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I feel an urgency to act on the issue of climate change
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: While contemplating about social change, I often feel lonely
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: Income inequality in the world is justified as talented people are bound
+      to earn more
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I am proactively taking steps to become an independent & responsible adult
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I carefully consider my needs before making any purchases
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I realize the importance of having mentors (non-family elders) whom I can
+      ask for continued growth input.
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
+  - name: I am actively cultivating relationship with mentor(s)
+    description: Self-assessment applicability 1–5 (1 = least applicable, 5 = most
+      applicable).
 - name: prod_nirman_question_phase_mismatches
   description: Identifies questions that were asked in one phase (Pre/Post) but omitted
     from the other for specific batches.
@@ -677,3 +742,5 @@ models:
   - name: is_missing_in_post
     description: Boolean flag indicating if the question is completely missing in
       the Post phase.
+- name: prod_nirman_demographics_questionnaire_wide
+  description: Consolidated wide table containing each participant's full demographic profile joined with all questionnaire responses across Level 0.1 (Pre & Post), Level 0.2 (Post), and Level 0.3 (Post) in a single row per Participant ID.

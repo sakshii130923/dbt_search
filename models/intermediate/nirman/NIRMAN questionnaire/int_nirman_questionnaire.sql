@@ -10,7 +10,7 @@
     ('carrer', 1, 8),
     ('criteria', 1, 9),
     ('insecurities', 1, 10),
-    ('question', 1, 142),
+    ('question', 1, 178),
     ('finance', 1, 5)
 ] %}
 

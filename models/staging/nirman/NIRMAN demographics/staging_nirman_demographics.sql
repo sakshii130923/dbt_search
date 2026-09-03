@@ -47,12 +47,19 @@ with source_data as (
             else level_of_education::text
         end                                                as level_of_education,
         current_status_of_work::text                       as current_status_of_work,
+        -- Field was float in Frappe (cast to numeric worked directly).
+        -- Changed to data type (text) in Frappe — values are now strings,
+        -- so we use a regex guard before casting to numeric.
         case
-            when trim(person_years_of_social_action_as_on_31st_march_latest::text) = ''   then null
-            when upper(trim(person_years_of_social_action_as_on_31st_march_latest::text)) = 'NA'  then null
-            when upper(trim(person_years_of_social_action_as_on_31st_march_latest::text)) = 'N/A' then null
-            when person_years_of_social_action_as_on_31st_march_latest is null             then null
-            else round(person_years_of_social_action_as_on_31st_march_latest::numeric, 1)
+            when trim(person_years_of_social_action_as_on_31st_march_latest::text) = ''    then null
+            when person_years_of_social_action_as_on_31st_march_latest is null        then null
+            when upper(trim(person_years_of_social_action_as_on_31st_march_latest::text))
+                 in ('NA', 'N/A')                                                     then null
+            when trim(person_years_of_social_action_as_on_31st_march_latest::text)
+                 !~ '^[0-9]+(\.[0-9]+)?$'                                             then null
+            else round(
+                trim(person_years_of_social_action_as_on_31st_march_latest::text)::numeric,
+                1)
         end                                                as person_years_social_action
     from {{ source('nirman', 'demographics_raw') }}
 ),
@@ -83,7 +90,24 @@ cleaned_data as (
             else trim(workshop)
         end                          as workshop,
         trim(workshop_type)          as workshop_type,
-        trim(workshop_month_year)    as workshop_month_year,
+        case
+            when workshop_month_year ~ '^\d{4}-\d{2}-\d{2}' then
+                case substring(trim(workshop_month_year) from 6 for 2)
+                    when '01' then substring(trim(workshop_month_year) from 3 for 2) || '-Jan'
+                    when '02' then substring(trim(workshop_month_year) from 3 for 2) || '-Feb'
+                    when '03' then substring(trim(workshop_month_year) from 3 for 2) || '-Mar'
+                    when '04' then substring(trim(workshop_month_year) from 3 for 2) || '-Apr'
+                    when '05' then substring(trim(workshop_month_year) from 3 for 2) || '-May'
+                    when '06' then substring(trim(workshop_month_year) from 3 for 2) || '-Jun'
+                    when '07' then substring(trim(workshop_month_year) from 3 for 2) || '-Jul'
+                    when '08' then substring(trim(workshop_month_year) from 3 for 2) || '-Aug'
+                    when '09' then substring(trim(workshop_month_year) from 3 for 2) || '-Sep'
+                    when '10' then substring(trim(workshop_month_year) from 3 for 2) || '-Oct'
+                    when '11' then substring(trim(workshop_month_year) from 3 for 2) || '-Nov'
+                    when '12' then substring(trim(workshop_month_year) from 3 for 2) || '-Dec'
+                end
+            else trim(workshop_month_year)
+        end                          as workshop_month_year,
         workshops_attended,
         case
             when trim(educational_stream) = 'Commerace' then 'Commerce'

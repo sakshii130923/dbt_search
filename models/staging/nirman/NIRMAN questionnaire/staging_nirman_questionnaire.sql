@@ -2,7 +2,7 @@
 
 -- Stage 1: Extract raw questionnaire data using dynamic column generation
 -- Column counts: carrer(8) + criteria(9) + insecurities(10) + social_contribution(1)
---              + question(142) + finance(5) = 175 response columns
+--              + question(171) + finance(5) = 204 response columns
 with raw_questionnaire as (
     select
         participant_id,
@@ -38,8 +38,8 @@ with raw_questionnaire as (
             else social_contribution
         end as social_contribution,
 
-        -- Question columns (142 total: question_1 to question_142)
-        {% for i in range(1, 143) %}
+        -- Question columns (178 total: question_1 to question_178)
+        {% for i in range(1, 179) %}
         question_{{ i }},
         {% endfor %}
 
