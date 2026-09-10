@@ -20,7 +20,7 @@
 with source_data as (
     select
         id::text                                           as participant_id,
-        name::text                                         as name,
+        full_name::text                                    as name,
         gender::text                                       as gender,
         batch::text                                        as batch,
         current_age::numeric                               as current_age,
@@ -47,12 +47,19 @@ with source_data as (
             else level_of_education::text
         end                                                as level_of_education,
         current_status_of_work::text                       as current_status_of_work,
+        -- Field was float in Frappe (cast to numeric worked directly).
+        -- Changed to data type (text) in Frappe — values are now strings,
+        -- so we use a regex guard before casting to numeric.
         case
-            when trim(person_years_of_social_action_as_on_31st_march_latest::text) = ''   then null
-            when upper(trim(person_years_of_social_action_as_on_31st_march_latest::text)) = 'NA'  then null
-            when upper(trim(person_years_of_social_action_as_on_31st_march_latest::text)) = 'N/A' then null
-            when person_years_of_social_action_as_on_31st_march_latest is null             then null
-            else round(person_years_of_social_action_as_on_31st_march_latest::numeric, 1)
+            when trim(person_years_of_social_action_as_on_31st_march_latest::text) = ''    then null
+            when person_years_of_social_action_as_on_31st_march_latest is null        then null
+            when upper(trim(person_years_of_social_action_as_on_31st_march_latest::text))
+                 in ('NA', 'N/A')                                                     then null
+            when trim(person_years_of_social_action_as_on_31st_march_latest::text)
+                 !~ '^[0-9]+(\.[0-9]+)?$'                                             then null
+            else round(
+                trim(person_years_of_social_action_as_on_31st_march_latest::text)::numeric,
+                1)
         end                                                as person_years_social_action
     from {{ source('nirman', 'demographics_raw') }}
 ),
@@ -83,9 +90,30 @@ cleaned_data as (
             else trim(workshop)
         end                          as workshop,
         trim(workshop_type)          as workshop_type,
-        trim(workshop_month_year)    as workshop_month_year,
+        case
+            when workshop_month_year ~ '^\d{4}-\d{2}-\d{2}' then
+                case substring(trim(workshop_month_year) from 6 for 2)
+                    when '01' then substring(trim(workshop_month_year) from 3 for 2) || '-Jan'
+                    when '02' then substring(trim(workshop_month_year) from 3 for 2) || '-Feb'
+                    when '03' then substring(trim(workshop_month_year) from 3 for 2) || '-Mar'
+                    when '04' then substring(trim(workshop_month_year) from 3 for 2) || '-Apr'
+                    when '05' then substring(trim(workshop_month_year) from 3 for 2) || '-May'
+                    when '06' then substring(trim(workshop_month_year) from 3 for 2) || '-Jun'
+                    when '07' then substring(trim(workshop_month_year) from 3 for 2) || '-Jul'
+                    when '08' then substring(trim(workshop_month_year) from 3 for 2) || '-Aug'
+                    when '09' then substring(trim(workshop_month_year) from 3 for 2) || '-Sep'
+                    when '10' then substring(trim(workshop_month_year) from 3 for 2) || '-Oct'
+                    when '11' then substring(trim(workshop_month_year) from 3 for 2) || '-Nov'
+                    when '12' then substring(trim(workshop_month_year) from 3 for 2) || '-Dec'
+                end
+            else trim(workshop_month_year)
+        end                          as workshop_month_year,
         workshops_attended,
-        trim(educational_stream)     as educational_stream_raw,
+        case
+            when trim(educational_stream) = 'Commerace' then 'Commerce'
+            when trim(educational_stream) = 'Medical' then 'Medical / Public Health'
+            else trim(educational_stream)
+        end                          as educational_stream_raw,
         trim(level_of_education)     as level_of_education,
         trim(current_status_of_work) as current_status_of_work_raw,
         person_years_social_action,
@@ -153,8 +181,7 @@ cleaned_data as (
                  or lower(trim(current_status_of_work)) ilike '%different trajectory%'
                 then 'Graduate'
             when (current_status_of_work is null
-                  or trim(current_status_of_work) = ''
-                  or lower(trim(current_status_of_work)) ilike '%not sure%')
+                  or trim(current_status_of_work) = '')
                  and (
                      upper(trim(level_of_education)) = 'M'
                      or upper(trim(level_of_education)) = 'P'
@@ -1285,48 +1312,60 @@ workshop_parsed as (
             when lower(trim(split_part(workshop_month_year, ' ', 1))) = 'october'   then 'October'
             when lower(trim(split_part(workshop_month_year, ' ', 1))) = 'november'  then 'November'
             when lower(trim(split_part(workshop_month_year, ' ', 1))) = 'december'  then 'December'
-            -- Format: "Aug-25"  (3-letter abbreviation before the hyphen)
-            when lower(trim(split_part(workshop_month_year, '-', 1))) = 'jan'  then 'January'
-            when lower(trim(split_part(workshop_month_year, '-', 1))) = 'feb'  then 'February'
-            when lower(trim(split_part(workshop_month_year, '-', 1))) = 'mar'  then 'March'
-            when lower(trim(split_part(workshop_month_year, '-', 1))) = 'apr'  then 'April'
-            when lower(trim(split_part(workshop_month_year, '-', 1))) = 'may'  then 'May'
-            when lower(trim(split_part(workshop_month_year, '-', 1))) = 'jun'  then 'June'
-            when lower(trim(split_part(workshop_month_year, '-', 1))) = 'jul'  then 'July'
-            when lower(trim(split_part(workshop_month_year, '-', 1))) = 'aug'  then 'August'
-            when lower(trim(split_part(workshop_month_year, '-', 1))) = 'sep'  then 'September'
-            when lower(trim(split_part(workshop_month_year, '-', 1))) = 'oct'  then 'October'
-            when lower(trim(split_part(workshop_month_year, '-', 1))) = 'nov'  then 'November'
-            when lower(trim(split_part(workshop_month_year, '-', 1))) = 'dec'  then 'December'
+            -- Format: "Aug-25" or "25-Aug" (3-letter abbreviation before or after the hyphen)
+            when lower(trim(split_part(workshop_month_year, '-', 1))) = 'jan' or lower(trim(split_part(workshop_month_year, '-', 2))) = 'jan'  then 'January'
+            when lower(trim(split_part(workshop_month_year, '-', 1))) = 'feb' or lower(trim(split_part(workshop_month_year, '-', 2))) = 'feb'  then 'February'
+            when lower(trim(split_part(workshop_month_year, '-', 1))) = 'mar' or lower(trim(split_part(workshop_month_year, '-', 2))) = 'mar'  then 'March'
+            when lower(trim(split_part(workshop_month_year, '-', 1))) = 'apr' or lower(trim(split_part(workshop_month_year, '-', 2))) = 'apr'  then 'April'
+            when lower(trim(split_part(workshop_month_year, '-', 1))) = 'may' or lower(trim(split_part(workshop_month_year, '-', 2))) = 'may'  then 'May'
+            when lower(trim(split_part(workshop_month_year, '-', 1))) = 'jun' or lower(trim(split_part(workshop_month_year, '-', 2))) = 'jun'  then 'June'
+            when lower(trim(split_part(workshop_month_year, '-', 1))) = 'jul' or lower(trim(split_part(workshop_month_year, '-', 2))) = 'jul'  then 'July'
+            when lower(trim(split_part(workshop_month_year, '-', 1))) = 'aug' or lower(trim(split_part(workshop_month_year, '-', 2))) = 'aug'  then 'August'
+            when lower(trim(split_part(workshop_month_year, '-', 1))) = 'sep' or lower(trim(split_part(workshop_month_year, '-', 2))) = 'sep'  then 'September'
+            when lower(trim(split_part(workshop_month_year, '-', 1))) = 'oct' or lower(trim(split_part(workshop_month_year, '-', 2))) = 'oct'  then 'October'
+            when lower(trim(split_part(workshop_month_year, '-', 1))) = 'nov' or lower(trim(split_part(workshop_month_year, '-', 2))) = 'nov'  then 'November'
+            when lower(trim(split_part(workshop_month_year, '-', 1))) = 'dec' or lower(trim(split_part(workshop_month_year, '-', 2))) = 'dec'  then 'December'
             else null
         end as workshop_month,
 
         -- ── Month number (for sorting in charts) ──────────────────────────
         case
             when lower(trim(split_part(workshop_month_year, ' ', 1))) in ('january')   or
-                 lower(trim(split_part(workshop_month_year, '-', 1))) = 'jan'           then 1
+                 lower(trim(split_part(workshop_month_year, '-', 1))) = 'jan'          or
+                 lower(trim(split_part(workshop_month_year, '-', 2))) = 'jan'           then 1
             when lower(trim(split_part(workshop_month_year, ' ', 1))) in ('february')  or
-                 lower(trim(split_part(workshop_month_year, '-', 1))) = 'feb'           then 2
+                 lower(trim(split_part(workshop_month_year, '-', 1))) = 'feb'          or
+                 lower(trim(split_part(workshop_month_year, '-', 2))) = 'feb'           then 2
             when lower(trim(split_part(workshop_month_year, ' ', 1))) in ('march')     or
-                 lower(trim(split_part(workshop_month_year, '-', 1))) = 'mar'           then 3
+                 lower(trim(split_part(workshop_month_year, '-', 1))) = 'mar'          or
+                 lower(trim(split_part(workshop_month_year, '-', 2))) = 'mar'           then 3
             when lower(trim(split_part(workshop_month_year, ' ', 1))) in ('april')     or
-                 lower(trim(split_part(workshop_month_year, '-', 1))) = 'apr'           then 4
+                 lower(trim(split_part(workshop_month_year, '-', 1))) = 'apr'          or
+                 lower(trim(split_part(workshop_month_year, '-', 2))) = 'apr'           then 4
             when lower(trim(split_part(workshop_month_year, ' ', 1))) in ('may')       or
-                 lower(trim(split_part(workshop_month_year, '-', 1))) = 'may'           then 5
+                 lower(trim(split_part(workshop_month_year, '-', 1))) = 'may'          or
+                 lower(trim(split_part(workshop_month_year, '-', 2))) = 'may'           then 5
             when lower(trim(split_part(workshop_month_year, ' ', 1))) in ('june')      or
-                 lower(trim(split_part(workshop_month_year, '-', 1))) = 'jun'           then 6
+                 lower(trim(split_part(workshop_month_year, '-', 1))) = 'jun'          or
+                 lower(trim(split_part(workshop_month_year, '-', 2))) = 'jun'           then 6
             when lower(trim(split_part(workshop_month_year, ' ', 1))) in ('july')      or
-                 lower(trim(split_part(workshop_month_year, '-', 1))) = 'jul'           then 7
+                 lower(trim(split_part(workshop_month_year, '-', 1))) = 'jul'          or
+                 lower(trim(split_part(workshop_month_year, '-', 2))) = 'jul'           then 7
             when lower(trim(split_part(workshop_month_year, ' ', 1))) in ('august')    or
-                 lower(trim(split_part(workshop_month_year, '-', 1))) = 'aug'           then 8
+                 lower(trim(split_part(workshop_month_year, '-', 1))) = 'aug'          or
+                 lower(trim(split_part(workshop_month_year, '-', 2))) = 'aug'           then 8
             when lower(trim(split_part(workshop_month_year, ' ', 1))) in ('september') or
-                 lower(trim(split_part(workshop_month_year, '-', 1))) = 'sep'           then 9
+                 lower(trim(split_part(workshop_month_year, '-', 1))) = 'sep'          or
+                 lower(trim(split_part(workshop_month_year, '-', 2))) = 'sep'           then 9
             when lower(trim(split_part(workshop_month_year, ' ', 1))) in ('october')   or
-                 lower(trim(split_part(workshop_month_year, '-', 1))) = 'oct'           then 10
+                 lower(trim(split_part(workshop_month_year, '-', 1))) = 'oct'          or
+                 lower(trim(split_part(workshop_month_year, '-', 2))) = 'oct'           then 10
             when lower(trim(split_part(workshop_month_year, ' ', 1))) in ('november')  or
-                 lower(trim(split_part(workshop_month_year, '-', 1))) = 'nov'           then 11
+                 lower(trim(split_part(workshop_month_year, '-', 1))) = 'nov'          or
+                 lower(trim(split_part(workshop_month_year, '-', 2))) = 'nov'           then 11
             when lower(trim(split_part(workshop_month_year, ' ', 1))) in ('december')  or
-                 lower(trim(split_part(workshop_month_year, '-', 1))) = 'dec'           then 12
+                 lower(trim(split_part(workshop_month_year, '-', 1))) = 'dec'          or
+                 lower(trim(split_part(workshop_month_year, '-', 2))) = 'dec'           then 12
             else null
         end as workshop_month_num,
 
@@ -1338,9 +1377,12 @@ workshop_parsed as (
             -- Space-separated format: year is the second token, 4 digits
             when workshop_month_year ~ '^[A-Za-z]+ \d{4}$'
                 then split_part(trim(workshop_month_year), ' ', 2)::integer
-            -- Hyphen format: year is the part after '-', 2 digits → prepend 20
+            -- Hyphen format (Mon-YY): year is the part after '-', 2 digits → prepend 20
             when workshop_month_year ~ '^[A-Za-z]+-\d{2}$'
                 then (2000 + split_part(trim(workshop_month_year), '-', 2)::integer)
+            -- Hyphen format (YY-Mon): year is the part before '-', 2 digits → prepend 20
+            when workshop_month_year ~ '^\d{2}-[A-Za-z]+$'
+                then (2000 + split_part(trim(workshop_month_year), '-', 1)::integer)
             else null
         end as workshop_year
 
@@ -1373,13 +1415,30 @@ select
     participant_id,
     name,
     gender,
-    batch,
+    case
+        when batch < 10 then '0' || batch::text
+        else batch::text
+    end as batch,
     current_age,
     age_at_workshop,
     workshop,
     workshop_type,
     workshop_month_year,
-    workshop_month,                  -- e.g. 'December'
+    case
+        when workshop_month = 'April'     then '01-April'
+        when workshop_month = 'May'       then '02-May'
+        when workshop_month = 'June'      then '03-June'
+        when workshop_month = 'July'      then '04-July'
+        when workshop_month = 'August'    then '05-August'
+        when workshop_month = 'September' then '06-September'
+        when workshop_month = 'October'   then '07-October'
+        when workshop_month = 'November'  then '08-November'
+        when workshop_month = 'December'  then '09-December'
+        when workshop_month = 'January'   then '10-January'
+        when workshop_month = 'February'  then '11-February'
+        when workshop_month = 'March'     then '12-March'
+        else workshop_month
+    end as workshop_month,
     workshop_month_num,              -- e.g. 12  (use for chart sort order)
     workshop_fy,                     -- e.g. 'FY 2024-25'
     workshops_attended,

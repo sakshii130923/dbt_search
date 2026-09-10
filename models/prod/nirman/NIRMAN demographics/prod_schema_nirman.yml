@@ -1,14 +1,15 @@
 version: 2
 models:
 - name: prod_nirman_demographics
-  description: '[NIRMAN | Demographics] Primary master registry for unique participant
+  description: |
+    [NIRMAN | Demographics] Primary master registry for unique participant
     baseline profiles. Renames all columns to human-readable quoted labels suitable
     for Metabase. Contains objective profile data: Gender, Age, Educational_Stream,
     Current_Status_Of_Work, cohort context (Batch, Workshop_Type, Workshop_Financial_Year),
     geographic data (Native_State, Native_District, Native_Tehsil_Town), and longitudinal tracking
     (Person_Years_Social_Action, Point 2 and 3 workshop invitation and attendance flags).
     JOIN to Questionnaire on Participant_ID for psychometric data. 
-    Default filter: WHERE Workshop_Type <> ''Krutee NIRMAN''.
+    Default filter: WHERE Workshop_Type <> 'Krutee NIRMAN'.
   meta:
     table_role: Demographics — objective profile data
     join_key: Participant_ID
