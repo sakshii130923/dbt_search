@@ -1,83 +1,69 @@
 version: 2
 
 models:
-  - name: staging_referral_management_chatbot
-    description: >
-      Staging model for patient referrals generated through the referral chatbot.
-      SEARCH field staff working in villages — Supervisors, ASHAs, MMU (Mobile Medical Unit)
-      team members, and MHD (Mental Health Department) team counsellors — use a chatbot
-      to refer a patient to a hospital/OPD team when they assess that the patient needs care
-      beyond what can be managed in the village. The chatbot captures the patient and referrer
-      details and issues a unique referral code (Reference Number) back to the field staff.
-      This model cleans, de-duplicates, and casts the raw Frappe/Airbyte data into one
-      validated row per referral.
+  - name: staging_patient_referrals
     columns:
-      - name: reference_id
-        description: >
-          Unique referral code issued by the chatbot when a field staff member raises a
-          referral for a patient. Acts as the primary key of this model — one row per
-          referral case. Never null or blank; de-duplicated to the most recently
-          modified record where the same code appears more than once in the raw sync.
-        tests:
-          - unique
-          - not_null
+    - name: reference_id
+      description: Unique referral code issued by the chatbot to the field staff member
+    - name: referral_date
+      description: Date the referral was raised
+    - name: phc
+      description: PHC / village catchment area the field staff member was operating in
+    - name: referrer_department
+      description: Team/department of the field staff member who raised the referral (e.g. MMU, MHD)
+    - name: referrer_name
+      description: Name of the field staff member who raised the referral
+    - name: patient_name
+      description: Name of the patient being referred
+    - name: patient_age
+      description: Age of the patient as entered in source
+    - name: patient_gender
+      description: Gender of the patient as entered in source
+    - name: opd_departments
+      description: Hospital OPD department the patient was referred to
+    - name: referral_status
+      description: Status of the referral (e.g. pending, completed, cancelled)
+    - name: referrer_id
+      description: Unique identifier of the field staff member who raised the referral
+    - name: patient_taluka
+      description: Taluka of the patient as entered in source
+    - name: service_facility_type
+      description: Type of service facility the patient was referred to (e.g. SEARCH, Government Hospital, Other)
+    - name: Other_facility_name
+      description: Name of the other facility if service_facility_type is 'Other'
+    - name: referred_to_department
+      description: Department the patient was referred to at the service facility SEARCH only.
+    - name: followup_status
+      description: Status of the follow-up for the referral (e.g. visited, pending, follow-up in progress)
+    - name: opd_category
+      description: Category of the OPD department the patient was referred to (e.g. Regular OPD, Specialty OPD, Catract Surgery)
+    - name: patient_village
+      description: Village of the patient as entered in source
+    - name: referrer_by_who
+      description: Name of the person who referred the patient (e.g. ASHA, MMU Docter, MHD counsellor)        
+    - name: visit_date
+      description: Date the patient visited the referred facility
+    - name: followup_visit_count
+      description: Number of follow-up visits the has done by search employee for the patient after the initial referral
+    - name: referred_by_doctor
+      description: Name of the doctor who referred the patient to the service facility.
+    - name: facility_visited
+      description: Name of the facility visited by the patient after referral.  
+    - name: referral_recorded_date
+      description: Date when the referral record was created in the chatbot system
 
-      - name: referral_date
-        description: >
-          Date on which the field staff member raised the referral for the patient
-          (i.e. the date the patient was assessed in the village and referred onward).
-          Stored as a proper date type. Values that don't parse as a valid date in the
-          raw data are set to null rather than failing the model.
-        tests:
-          - not_null
-
-      - name: phc
-        description: >
-          Name of the PHC (Primary Health Centre) / village catchment area the field
-          staff member is operating in when the referral was raised. Free text, trimmed.
-
-      - name: referrer_department
-        description: >
-          Team/department of the SEARCH field staff member who raised the referral —
-          e.g. MMU (Mobile Medical Unit), MHD (Mental Health Department), or similar
-          field cadres. Free text, trimmed.
-
-      - name: referrer_name
-        description: >
-          Name of the SEARCH field staff member (Supervisor, ASHA, MMU team member, or
-          MHD counsellor) who identified the patient's need and raised the referral via
-          the chatbot. Free text, trimmed.
-
-      - name: patient_name
-        description: >
-          Name of the patient being referred to the hospital/OPD team for care, as
-          recorded by the field staff member in the chatbot. Free text, trimmed.
-
-      - name: patient_age
-        description: >
-          Age of the patient in years, as recorded by the field staff member. Constrained
-          to a realistic human range (0–120); any value outside this range or non-numeric
-          entry is set to null rather than passed through uncorrected.
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 120
-
-      - name: patient_gender
-        description: >
-          Gender of the patient as recorded by the field staff member, normalised to
-          exactly one of "Male", "Female", or "Other". Any unrecognised or blank value
-          is set to null.
-        tests:
-          - accepted_values:
-              values: ['Male', 'Female', 'Other']
-
-      - name: referred_to_department
-        description: >
-          The hospital OPD department the patient was referred to for treatment
-          (sourced from the chatbot's "Opd Departments" field) — e.g. Orthopedics,
-          Gynaecology, etc. Free text, trimmed.
-      - name: patient_taluka
-        description: >
-          The taluka (sub-district) of the patient being referred, as recorded by the
-          field staff member in the chatbot. Free text, trimmed.
+  - name: staging_supervisor_visit
+    columns:
+    - name: reference_id  
+      description: Unique referral code issued by the chatbot to the field staff member 
+    - name: visit_date
+      description: Date of the follow-up visit made by the field staff member to the patient after referral
+    - name: supervisor_name
+      description: Name of the field staff member (Supervisor) who made the follow-up visit
+    - name: facility_visited
+      description: Name of the facility visited by the patient during the follow-up visit
+    - name: patient_health_status
+      description: Health status of the patient as observed during the follow-up visit
+    - name: non_visit_reason
+      description: Reason provided if the patient was not visited during the follow-up visit
+             

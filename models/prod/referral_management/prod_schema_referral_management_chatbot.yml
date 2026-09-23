@@ -1,64 +1,73 @@
 version: 2
 
 models:
-  - name: prod_referral_management_chatbot
-    description: >
-      Production table of patient referrals raised by SEARCH field staff
-      (Supervisors, ASHAs, MMU, MHD counsellors) via the referral chatbot.
-      One row per referral. Only fully complete records are included —
-      every column is guaranteed non-null.
+version: 2
+
+models:
+  - name: prod_patient_referrals
     columns:
-      - name: reference_id
-        description: Unique referral code issued by the chatbot. Primary key.
-        tests:
-          - unique
-          - not_null
-
+      - name: reference_number
+        description: Unique referral code issued by the chatbot to the field staff member
       - name: referral_date
-        description: Date the referral was raised.
-        tests:
-          - not_null
-
+        description: Date the referral was raised
       - name: phc
-        description: PHC / village area the field staff member was operating in.
-        tests:
-          - not_null
-
+        description: PHC / village catchment area the field staff member was operating in
       - name: referrer_department
-        description: Team of the field staff member who raised the referral (e.g. MMU, MHD).
-        tests:
-          - not_null
-
+        description: Team/department of the field staff member who raised the referral (e.g. MMU, MHD)
       - name: referrer_name
-        description: Name of the field staff member who raised the referral.
-        tests:
-          - not_null
-
+        description: Name of the field staff member who raised the referral
       - name: patient_name
-        description: Name of the referred patient.
-        tests:
-          - not_null
-
+        description: Name of the patient being referred
       - name: patient_age
-        description: Patient's age in years (0–120).
-        tests:
-          - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 120
-
+        description: Age of the patient as entered in source
       - name: patient_gender
-        description: Patient's gender — Male, Female, or Other.
-        tests:
-          - not_null
-          - accepted_values:
-              values: ['Male', 'Female', 'Other']
-
-      - name: referred_to_department
-        description: Hospital OPD department the patient was referred to.
-        tests:
-          - not_null
-
+        description: Gender of the patient as entered in source
+      - name: opd_departments
+        description: Hospital OPD department the patient was referred to
+      - name: referral_status
+        description: Status of the referral (e.g. pending, completed, cancelled)
+      - name: referrer_id
+        description: Unique identifier of the field staff member who raised the referral
       - name: patient_taluka
-        description: Taluka (sub-district) of the referred patient.
+        description: Taluka of the patient as entered in source
+      - name: service_facility_type
+        description: Type of service facility the patient was referred to (e.g. SEARCH, Government Hospital, Other)
+      - name: Other_facility_name
+        description: Name of the other facility if service_facility_type is 'Other'
+      - name: referred_to_department
+        description: Department the patient was referred to at the service facility SEARCH only.
+      - name: followup_status
+        description: Status of the follow-up for the referral (e.g. visited, pending, follow-up in progress)
+      - name: opd_category
+        description: Category of the OPD department the patient was referred to (e.g. Regular OPD, Specialty OPD, Catract Surgery)
+      - name: patient_village
+        description: Village of the patient as entered in source
+      - name: referrer_by_who
+        description: Name of the person who referred the patient (e.g. ASHA, MMU Docter, MHD counsellor)        
+      - name: facility_visit_date
+        description: Date the patient visited the referred facility
+      - name: followup_visit_count
+        description: Number of follow-up visits the has done by search employee for the patient after the initial referral
+      - name: referred_by_doctor
+        description: Name of the doctor who referred the patient to the service facility.
+      - name: facility_visited
+        description: Name of the facility visited by the patient after referral.  
+      - name: referral_recorded_date
+        description: Date when the referral record was created in the chatbot system
+
+  - name: prod_supervisor_visit
+    columns:
+      - name: reference_number  
+        description: Unique referral code issued by the chatbot to the field staff member 
+      - name: supervisor_visit_date
+        description: Date of the follow-up visit made by the field staff member to the patient after referral
+      - name: supervisor_name
+        description: Name of the field staff member (Supervisor) who made the follow-up visit
+      - name: facility visited
+        description: Name of the facility visited by the patient during the follow-up visit
+      - name: patient_health_status
+        description: Health status of the patient as observed during the follow-up visit
+      - name: non_visited_reason
+        description: Reason provided if the patient was not visited during the follow-up visit
+             
         
