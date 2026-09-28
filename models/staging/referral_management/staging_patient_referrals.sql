@@ -47,36 +47,23 @@ cleaned as (
         -- ============ DATES (source format DD-MM-YYYY) ============
         -- Anything that doesn't match the pattern becomes null instead of
         -- erroring the run.
-        case
-            when s.referral_date::text ~ '^\d{2}-\d{2}-\d{4}$'
-                then to_date(s.referral_date::text, 'DD-MM-YYYY')
-            else null
-        end                                                                   as referral_date,
+        {{ validate_date('s.referral_date') }}                                 as referral_date,
 
-        case
-            when s.visit_date::text ~ '^\d{2}-\d{2}-\d{4}$'
-                then to_date(s.visit_date::text, 'DD-MM-YYYY')
-            else null
-        end                                                                   as visit_date,
+        {{ validate_date('s.visit_date') }}                                    as visit_date,
 
-        case
-            when s.referral_recorded_date::text ~ '^\d{2}-\d{2}-\d{4}$'
-                then to_date(s.referral_recorded_date::text, 'DD-MM-YYYY')
-            else null
-        end                                                                   as referral_recorded_date,
+        {{ validate_date('s.referral_recorded_date') }}                        as referral_recorded_date,
 
         -- patient_age: numeric, constrained to a realistic human range (0-120)
         case
-            when s.patient_age::text ~ '^\d+$'
-                and (s.patient_age::text)::numeric between 0 and 120
-                then (s.patient_age::text)::int
+            when trim(s.patient_age::text) ~ '^\d+(\.\d+)?$'
+                and (trim(s.patient_age::text))::numeric between 0 and 120
+                then (trim(s.patient_age::text))::numeric(5,2)
             else null
-        end                                                                   as patient_age,
-
+        end                                                                     as patient_age,
         -- visit_count: numeric only, no upper limit so extra visits aren't lost
         case
-            when s.visit_count::text ~ '^\d+$'
-                then (s.visit_count::text)::int
+            when trim(s.visit_count::text) ~ '^\d+$'
+                then (trim(s.visit_count::text))::int
             else null
         end                                                                   as followup_visit_count,
 

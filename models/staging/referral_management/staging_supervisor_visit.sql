@@ -20,12 +20,7 @@ cleaned as (
         trim(s.parent)::text                                        as reference_id,
 
         --visit date
-        case
-            when s.visit_date::text ~ '^\d{2}-\d{2}-\d{4}$'
-                then to_date(s.visit_date::text, 'DD-MM-YYYY')
-            else null
-        end                                                                   as visit_date,
-
+        {{ validate_date('s.visit_date') }}                                    as visit_date,
         
         nullif(trim(s.supervisor_name), '')::text                             as supervisor_name,
         nullif(trim(s.facility_visited), '')::text                            as facility_visited,
